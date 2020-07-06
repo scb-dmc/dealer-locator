@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "files": [
-    "dist"
+    "src", "images"
   ],
   "scripts": {
     "build": "npx rollup -c",
