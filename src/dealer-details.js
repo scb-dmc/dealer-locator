@@ -28,14 +28,16 @@ const dealerConversionEvent = (dealer, action) => {
   });
 };
 
-const DealerDetails = ({ dealer, close }) => {
+const DealerDetails = ({ dealer, close, closeButton }) => {
   if (!dealer) {
     return <div />;
   }
 
   return (
     <div>
-      <CloseDealerButton>{/* close button */}</CloseDealerButton>
+      <CloseDealerButton>
+        {React.cloneElement(closeButton, { onClick: close })}
+      </CloseDealerButton>
       <DealerTextArea>
         <DealerName>{dealer.name}</DealerName>
         <Details>
