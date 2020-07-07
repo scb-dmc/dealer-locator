@@ -6,7 +6,7 @@ const defaultTheme = {
     pagePaddingSide: "25px",
     sideBySideLayoutBreakpoint: "900px",
     textColorLight: "grey",
-    textColorDark: "#e7e7e7",
+    textColorDark: "#4d4d4d",
   },
 };
 
