@@ -74,6 +74,7 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
             {dealer.website &&
               React.cloneElement(websiteButton, {
                 onClick: dealerConversionEvent(dealer, "Website Clicked"),
+                callToActionLink: dealer.website,
               })}
           </Website>
         </Details>
