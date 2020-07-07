@@ -3,6 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
+import reserve from "./theme";
+
 const dealerDistanceCalculator = (location) => {
   return (dealer) => {
     const dist = Math.sqrt(
@@ -91,8 +93,6 @@ const Dealer = styled.li`
   padding: 10px 10px 10px 0px;
 `;
 
-export default DealerList;
-
 /**
  * mapCenter is an object like {lat: 12.05, lng: 3.14}. List will be sorted by nearest to this location.
  *
@@ -111,3 +111,12 @@ DealerList.propTypes = {
   mapBoundary: PropTypes.object,
   border: PropTypes.element.isRequired,
 };
+
+DealerList.defaultProps = {
+  theme: {
+    textColorDark: reserve.textColorDark,
+    textColorLight: reserve.textColorLight,
+  },
+};
+
+export default DealerList;
