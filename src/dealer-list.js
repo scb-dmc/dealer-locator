@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
-import reserve from "./theme";
+import { reserve } from "./theme";
 
 const dealerDistanceCalculator = (location) => {
   return (dealer) => {
