@@ -81,7 +81,7 @@ class DealerLocator extends React.Component {
   };
 
   dealersWithSelectedFlag = () => {
-    return _.map(dealers, (dealer) => ({
+    return _.map(this.props.dealers, (dealer) => ({
       ...dealer,
       selected: dealer.id === _.get(this.state, "selectedDealer.id"),
     }));
@@ -104,7 +104,7 @@ class DealerLocator extends React.Component {
 
     // No zoom specified, so we'll need to figure out the correct zoom level based on the nearest dealer
     let nearestDealer = _.first(
-      _.sortBy(dealers, (dealer) =>
+      _.sortBy(this.props.dealers, (dealer) =>
         this.calculateDistance(
           dealer.location.lat,
           coord.lat,
