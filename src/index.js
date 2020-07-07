@@ -199,6 +199,7 @@ class DealerLocator extends React.Component {
             dealer={this.state.selectedDealer}
             close={this.clearSelectedDealer}
             closeButton={this.props.closeDealerButton}
+            websiteButton={this.props.dealerWebsiteButton}
           />
         </DealerDetailsWrapper>
       </DealerLocatorWrapper>

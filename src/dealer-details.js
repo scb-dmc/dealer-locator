@@ -28,7 +28,7 @@ const dealerConversionEvent = (dealer, action) => {
   });
 };
 
-const DealerDetails = ({ dealer, close, closeButton }) => {
+const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
   if (!dealer) {
     return <div />;
   }
@@ -72,9 +72,9 @@ const DealerDetails = ({ dealer, close, closeButton }) => {
           </DealerDetailRow>
           <Website>
             {dealer.website &&
-              {
-                /* website button */
-              }}
+              React.cloneElement(websiteButton, {
+                onClick: dealerConversionEvent(dealer, "Website Clicked"),
+              })}
           </Website>
         </Details>
       </DealerTextArea>
