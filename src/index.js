@@ -285,6 +285,8 @@ DealerLocator.propTypes = {
   pageContext: PropTypes.object,
 };
 
-DealerLocator.defaultProps = reserve;
+DealerLocatorWrapper.defaultProps = {
+  theme: reserve.theme,
+};
 
 export default DealerLocator;
