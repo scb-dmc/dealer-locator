@@ -67,11 +67,11 @@ const DealerList = ({
     DealerCard(dealer, idx, onDealerClicked);
   return (
     <>
-      <List emphasized={true} theme={theme}>
+      <List emphasized={true}>
         {_.sortBy(dealersOnMap, sorter).map(dealerCardCreator)}
       </List>
       {!_.isEmpty(dealersOnMap) && border}
-      <List emphasized={false} theme={theme}>
+      <List emphasized={false}>
         {_.sortBy(dealersOffMap, sorter).map(dealerCardCreator)}
       </List>
     </>
@@ -114,10 +114,7 @@ DealerList.propTypes = {
 };
 
 DealerList.defaultProps = {
-  theme: {
-    textColorDark: reserve.textColorDark,
-    textColorLight: reserve.textColorLight,
-  },
+  theme: reserve.theme,
 };
 
 export default DealerList;
