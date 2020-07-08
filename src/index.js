@@ -284,7 +284,11 @@ const ListArea = styled.div`
 `;
 
 DealerLocator.propTypes = {
-  pageContext: PropTypes.object,
+  dealers: PropTypes.array.isRequired,
+  border: PropTypes.element.isRequired,
+  selectedDealerIcon: PropTypes.string.isRequired,
+  closeDealerButton: PropTypes.element.isRequired,
+  dealerWebsiteButton: PropTypes.element.isRequired,
 };
 
 DealerLocatorWrapper.defaultProps = {
