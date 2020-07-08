@@ -33,6 +33,32 @@ const ReserveDealerLocator = props => {
 export default ReserveDealerLocator;
 ```
 
+dealer-locator contains un-transpiled ES6 code, so it is necessary to configure
+Webpack to transpile dealer-locator. In a Gatsby project, this can be accomplished
+by adding the following to `gatsby-node.js`:
+
+```js
+// Transpile ES6 syntax in @scb-dmc folder in node_modules
+exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
+  const config = getConfig();
+
+  config.module.rules = [
+    ...config.module.rules.filter(
+      rule => String(rule.test) !== String(/\.jsx?$/)
+    ),
+    {
+      ...loaders.js(),
+      test: /\.jsx?$/,
+      exclude: modulePath =>
+        /node_modules/.test(modulePath) &&
+        !/node_modules\/(@scb-dmc)/.test(modulePath),
+    },
+  ];
+
+  actions.replaceWebpackConfig(config);
+};
+```
+
 ### Props
 
 * `dealers`: An array of dealers, which look like the following:
