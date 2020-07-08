@@ -50,6 +50,7 @@ const DealerList = ({
   mapCenter,
   mapBoundary,
   border,
+  theme,
 }) => {
   const dealersOnMap = _.filter(dealers, (dealer) =>
     isLocationWithinBoundary(dealer.location, mapBoundary)
@@ -66,11 +67,11 @@ const DealerList = ({
     DealerCard(dealer, idx, onDealerClicked);
   return (
     <>
-      <List emphasized={true}>
+      <List emphasized={true} theme={theme}>
         {_.sortBy(dealersOnMap, sorter).map(dealerCardCreator)}
       </List>
       {!_.isEmpty(dealersOnMap) && border}
-      <List emphasized={false}>
+      <List emphasized={false} theme={theme}>
         {_.sortBy(dealersOffMap, sorter).map(dealerCardCreator)}
       </List>
     </>
