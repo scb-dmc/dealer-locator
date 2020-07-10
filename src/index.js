@@ -192,6 +192,7 @@ class DealerLocator extends React.Component {
             onDealerMarkerClicked={this.onDealerSelected}
             onReady={this.onMapReady}
             selectedDealerIcon={this.props.selectedDealerIcon}
+            apiKey={this.props.apiKey}
           />
         </MapArea>
         <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
@@ -289,6 +290,7 @@ DealerLocator.propTypes = {
   selectedDealerIcon: PropTypes.string.isRequired,
   closeDealerButton: PropTypes.element.isRequired,
   dealerWebsiteButton: PropTypes.element.isRequired,
+  apiKey: PropTypes.string.isRequired,
 };
 
 DealerLocatorWrapper.defaultProps = {
