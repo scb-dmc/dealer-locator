@@ -168,6 +168,7 @@ class DealerLocator extends React.Component {
             goToMapLocation={this.goToMapLocation}
             key={"DealerSearch"}
             goToSearchLocation={this.goToSearchLocation}
+            apiKey={this.props.apiKey}
           />
         </SearchArea>
         <ListArea
