@@ -13,7 +13,7 @@ export default {
       strict: false,
     },
   ],
-  plugins: [babel({ babelHelpers: "bundled" }), json(), svg()],
+  plugins: [babel({ babelHelpers: "bundled" }), json(), svg({ base64: true })],
   external: [
     "@fortawesome/free-solid-svg-icons",
     "@fortawesome/react-fontawesome",
