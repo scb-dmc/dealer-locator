@@ -192,6 +192,7 @@ class DealerLocator extends React.Component {
             onBoundsChanged={this.onBoundsChanged}
             onDealerMarkerClicked={this.onDealerSelected}
             onReady={this.onMapReady}
+            unselectedDealerIcon={this.props.unselectedDealerIcon}
             selectedDealerIcon={this.props.selectedDealerIcon}
             apiKey={this.props.apiKey}
           />

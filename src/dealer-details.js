@@ -36,7 +36,7 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
   return (
     <div>
       <CloseDealerButton>
-        {React.cloneElement(closeButton, { onClick: close })}
+       <div onClick={close}>{closeButton}</div>
       </CloseDealerButton>
       <DealerTextArea>
         <DealerName>{dealer.name}</DealerName>
