@@ -39,14 +39,14 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
        <div onClick={close}>{closeButton}</div>
       </CloseDealerButton>
       <DealerTextArea>
-        <DealerName>{dealer.name}</DealerName>
         <Details>
-          <DealerDetailRow>
-            <div>{dealer.addr1}</div>
-            <div>{`${dealer.city} ${dealer.city ? "," : ""} ${dealer.state} ${
-              dealer.zip
-            } ${dealer.country}`}</div>
-          </DealerDetailRow>
+            <DealerName>{dealer.name}</DealerName>
+            <DealerDetailRow>
+              <div>{dealer.addr1}</div>
+              <div>{`${dealer.city} ${dealer.city ? "," : ""} ${dealer.state} ${
+                dealer.zip
+              } ${dealer.country}`}</div>
+            </DealerDetailRow>
 
           <DealerDetailRow>
             <DealerContact>
@@ -89,6 +89,7 @@ const Details = styled.div`
 
 const DealerContact = styled.div`
   display: flex;
+  flex-flow: row;
   justify-content: space-between;
   flex-wrap: wrap;
 
@@ -116,6 +117,12 @@ const CloseDealerButton = styled.div`
 
 const DealerTextArea = styled.div`
   padding-right: 20px;
+  
+  div {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
 `;
 
 const DealerName = styled.h1``;

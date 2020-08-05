@@ -31,8 +31,8 @@ const isLocationWithinBoundary = (location, boundary) => {
   return belowNorthEastCorner && aboveSouthWestCorner;
 };
 
-const DealerCard = (dealer, key, onDealerClicked) => (
-  <Dealer key={key} onClick={() => onDealerClicked(dealer)}>
+const DealerCard = (dealer, key, onDealerClicked, theme) => (
+  <Dealer key={key} onClick={() => onDealerClicked(dealer)} theme={theme}>
     <DealerName>{dealer.name}</DealerName>
     <DealerLocation>
       {dealer.addr1} {dealer.city}
@@ -64,7 +64,7 @@ const DealerList = ({
   const sorter = dealerDistanceCalculator(mapCenter);
 
   const dealerCardCreator = (dealer, idx) =>
-    DealerCard(dealer, idx, onDealerClicked);
+    DealerCard(dealer, idx, onDealerClicked, theme);
   return (
     <>
       <List emphasized={true} theme={theme}>
@@ -83,7 +83,8 @@ const List = styled.ul`
     props.emphasized ? props.theme.textColorDark : props.theme.textColorLight};
 `;
 
-const DealerName = styled.h3``;
+const DealerName = styled.h3`
+`;
 
 const DealerLocation = styled.div`
   font-size: 0.9rem;
@@ -92,6 +93,7 @@ const DealerLocation = styled.div`
 const Dealer = styled.li`
   cursor: pointer;
   padding: 10px 10px 10px 0px;
+  list-style: none;
 `;
 
 /**
