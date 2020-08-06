@@ -120,3 +120,4 @@ DealerList.defaultProps = {
 };
 
 export default DealerList;
+
