@@ -26,7 +26,7 @@ const ReserveDealerLocator = props => {
         closeDealerButton={<CloseButton size="12px" />}
         dealerWebsiteButton={<Button title="Website" externalLink={true} />}
         dealerDetailsComponent={DealerDetails}
-        dealerListComponent={DealerList}
+        dealerCardComponent={DealerCard}
       />
     </Layout>
   );
