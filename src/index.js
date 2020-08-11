@@ -10,6 +10,7 @@ import DealerMap from "./dealer-map";
 import DealerSearch from "./dealer-search";
 import { reserve } from "./theme";
 import { createMapBounds } from "./utils";
+import {GoogleApiWrapper} from "google-maps-react";
 
 const defaultStartingLocation = { lat: 36.9596054, lng: -122.0564889 };
 
@@ -27,7 +28,7 @@ class DealerLocator extends React.Component {
       mapCenter: defaultStartingLocation,
       mapBoundary: null,
       mapZoom: null,
-      selectedDealer: null,
+      selectedDealer: null
     };
   }
 
@@ -160,6 +161,9 @@ class DealerLocator extends React.Component {
   };
 
   render() {
+    const DealerDetailsComponent = this.props.dealerDetailsComponent ? this.props.dealerDetailsComponent : DealerDetails;
+    const DealerListComponent = this.props.dealerListComponent ? this.props.dealerListComponent : DealerList;
+
     return (
       <DealerLocatorWrapper>
         <SearchArea>
@@ -176,7 +180,7 @@ class DealerLocator extends React.Component {
           allowScroll={!this.state.selectedDealer}
           dealerSelected={!!this.state.selectedDealer}
         >
-          <DealerList
+          <DealerListComponent
             key={"DealerList"}
             dealers={this.dealersWithSelectedFlag()}
             onDealerClicked={this.onDealerSelected}
@@ -198,11 +202,11 @@ class DealerLocator extends React.Component {
           />
         </MapArea>
         <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
-          <DealerDetails
-            dealer={this.state.selectedDealer}
-            close={this.clearSelectedDealer}
-            closeButton={this.props.closeDealerButton}
-            websiteButton={this.props.dealerWebsiteButton}
+          <DealerDetailsComponent
+             dealer={this.state.selectedDealer}
+             close={this.clearSelectedDealer}
+             closeButton={this.props.closeDealerButton}
+             websiteButton={this.props.dealerWebsiteButton}
           />
         </DealerDetailsWrapper>
       </DealerLocatorWrapper>
@@ -293,6 +297,8 @@ DealerLocator.propTypes = {
   closeDealerButton: PropTypes.element.isRequired,
   dealerWebsiteButton: PropTypes.element.isRequired,
   apiKey: PropTypes.string.isRequired,
+  dealerDetailsComponent: PropTypes.element.isRequired,
+  dealerListComponent: PropTypes.element.isRequired,
 };
 
 DealerLocatorWrapper.defaultProps = {

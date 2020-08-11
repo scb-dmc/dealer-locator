@@ -25,6 +25,8 @@ const ReserveDealerLocator = props => {
         selectedDealerIcon={ReserveIcon}
         closeDealerButton={<CloseButton size="12px" />}
         dealerWebsiteButton={<Button title="Website" externalLink={true} />}
+        dealerDetailsComponent={DealerDetails}
+        dealerListComponent={DealerList}
       />
     </Layout>
   );
@@ -89,3 +91,5 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 * `dealerWebsiteButton`: A React element to act as the button linking to the dealer's website.
   *An `onClick` handler does not need to be specified and the appropirate handler will be added
   automatically*.
+* `dealerDetailsComponent`: A React component to extend the dealer details flyout card.
+* `dealerListComponent`: A React component to extend the dealer list.

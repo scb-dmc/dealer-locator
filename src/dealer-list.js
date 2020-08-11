@@ -32,16 +32,16 @@ const isLocationWithinBoundary = (location, boundary) => {
 };
 
 const DealerCard = (dealer, key, onDealerClicked, theme) => (
-  <Dealer key={key} onClick={() => onDealerClicked(dealer)} theme={theme}>
-    <DealerName>{dealer.name}</DealerName>
-    <DealerLocation>
-      {dealer.addr1} {dealer.city}
-      {(dealer.addr1 || dealer.city) && (dealer.state || dealer.zip)
-        ? ", "
-        : " "}
-      {dealer.state} {dealer.zip}
-    </DealerLocation>
-  </Dealer>
+    <Dealer key={key} onClick={() => onDealerClicked(dealer)} theme={theme}>
+      <DealerName>{dealer.name}</DealerName>
+      <DealerLocation>
+        {dealer.addr1} {dealer.city}
+        {(dealer.addr1 || dealer.city) && (dealer.state || dealer.zip)
+            ? ", "
+            : " "}
+          {dealer.state} {dealer.zip}
+      </DealerLocation>
+    </Dealer>
 );
 
 const DealerList = ({
@@ -64,7 +64,7 @@ const DealerList = ({
   const sorter = dealerDistanceCalculator(mapCenter);
 
   const dealerCardCreator = (dealer, idx) =>
-    DealerCard(dealer, idx, onDealerClicked, theme);
+      DealerCard(dealer, idx, onDealerClicked, theme);
   return (
     <>
       <List emphasized={true} theme={theme}>
@@ -120,4 +120,3 @@ DealerList.defaultProps = {
 };
 
 export default DealerList;
-
