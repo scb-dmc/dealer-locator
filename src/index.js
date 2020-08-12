@@ -27,7 +27,7 @@ class DealerLocator extends React.Component {
       mapCenter: defaultStartingLocation,
       mapBoundary: null,
       mapZoom: null,
-      selectedDealer: null,
+      selectedDealer: null
     };
   }
 
@@ -160,6 +160,8 @@ class DealerLocator extends React.Component {
   };
 
   render() {
+    const DealerDetailsComponent = this.props.dealerDetailsComponent ? this.props.dealerDetailsComponent : DealerDetails;
+
     return (
       <DealerLocatorWrapper>
         <SearchArea>
@@ -183,6 +185,7 @@ class DealerLocator extends React.Component {
             mapCenter={this.state.mapCenter}
             mapBoundary={this.state.mapBoundary}
             border={this.props.border}
+            dealerCardComponent={this.props.dealerCardComponent}
           />
         </ListArea>
         <MapArea>
@@ -192,16 +195,17 @@ class DealerLocator extends React.Component {
             onBoundsChanged={this.onBoundsChanged}
             onDealerMarkerClicked={this.onDealerSelected}
             onReady={this.onMapReady}
+            unselectedDealerIcon={this.props.unselectedDealerIcon}
             selectedDealerIcon={this.props.selectedDealerIcon}
             apiKey={this.props.apiKey}
           />
         </MapArea>
         <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
-          <DealerDetails
-            dealer={this.state.selectedDealer}
-            close={this.clearSelectedDealer}
-            closeButton={this.props.closeDealerButton}
-            websiteButton={this.props.dealerWebsiteButton}
+          <DealerDetailsComponent
+             dealer={this.state.selectedDealer}
+             close={this.clearSelectedDealer}
+             closeButton={this.props.closeDealerButton}
+             websiteButton={this.props.dealerWebsiteButton}
           />
         </DealerDetailsWrapper>
       </DealerLocatorWrapper>
@@ -292,6 +296,8 @@ DealerLocator.propTypes = {
   closeDealerButton: PropTypes.element.isRequired,
   dealerWebsiteButton: PropTypes.element.isRequired,
   apiKey: PropTypes.string.isRequired,
+  dealerDetailsComponent: PropTypes.element.isRequired,
+  dealerCardComponent: PropTypes.element.isRequired,
 };
 
 DealerLocatorWrapper.defaultProps = {
