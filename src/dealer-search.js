@@ -50,7 +50,9 @@ class DealerSearch extends React.Component {
                  <SearchIcon icon={faSearch} /> }
              </SearchBtn>
         </SearchWrapper>
-            {this.props.dealerFilterButton}
+            <div onClick={this.props.dealerFilterEvent}>
+                {this.props.dealerFilterButton}
+            </div>
         </>
     );
   }
