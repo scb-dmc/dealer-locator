@@ -25,47 +25,59 @@ class DealerSearch extends React.Component {
 
   render() {
     return (
-      <SearchWrapper>
-        <StyledSearchBar
-          placeholder="Find a dealer"
-          types={["(cities)"]}
-          onChange={this.onChange}
-          google={this.props.google}
-          onPlaceSelected={(places) => {
-            if (places.length > 0) {
-              return this.props.goToMapLocation({
-                lat: places[0].geometry.location.lat(),
-                lng: places[0].geometry.location.lng(),
-              });
-            }
-          }}
-        />
-        <SearchBtn
-          aria-label="search button"
-          onClick={() => this.props.goToSearchLocation(this.state.searchValue)}
-        >
-          <SearchIcon icon={faSearch} />
-        </SearchBtn>
-      </SearchWrapper>
+        <>
+        <SearchWrapper>
+             <StyledSearchBar
+                 placeholder={this.props.placeholder ? this.props.placeholder : 'Find a dealer'}
+                 types={["(cities)"]}
+                 searchBarStyles={this.props.searchBarStyles}
+                 onChange={this.onChange}
+                 google={this.props.google}
+                 onPlaceSelected={(places) => {
+                     if (places.length > 0) {
+                         return this.props.goToMapLocation({
+                             lat: places[0].geometry.location.lat(),
+                             lng: places[0].geometry.location.lng(),
+                         });
+                     }
+                 }}
+             />
+             <SearchBtn
+                 aria-label="search button"
+                 onClick={() => this.props.goToSearchLocation(this.state.searchValue)}
+             >
+                 {this.props.searchIcon ? this.props.searchIcon :
+                 <SearchIcon icon={faSearch} /> }
+             </SearchBtn>
+        </SearchWrapper>
+            {this.props.dealerFilterButton}
+        </>
     );
   }
 }
 
-const Loader = () => (
-  <SearchWrapper>
-    <SearchBarLoading>Search Options Loading...</SearchBarLoading>
-    <SearchBtn aria-label="search button">
-      <SearchIcon icon={faSearch} />
-    </SearchBtn>
-  </SearchWrapper>
-);
+const MakeLoader = (props) => {
+    return () => {
+        return(
+            <SearchWrapper>
+                <SearchBarLoading searchBarStyles={props.searchBarStyles}>Search Options Loading...</SearchBarLoading>
+                <SearchBtn aria-label="search button">
+                    { props.searchIcon ? props.searchIcon :
+                    <SearchIcon icon={faSearch} /> }
+                </SearchBtn>
+            </SearchWrapper>
+        )
+    }
+}
 
 const SearchWrapper = styled.div`
   display: flex;
   flex-flow: row;
+  position: relative;
+  left: 1rem;
 `;
 
-const searchBarStyles = `
+const defaultSearchBarStyles = `
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
   padding: 10px 30px 10px 10px;
@@ -75,11 +87,13 @@ const searchBarStyles = `
 `;
 
 const SearchBarLoading = styled.div`
-  ${searchBarStyles};
+  ${defaultSearchBarStyles};
+  ${props => props.searchBarStyles}
 `;
 
 const StyledSearchBar = styled(AutoCompleteSearch)`
-  ${searchBarStyles};
+  ${defaultSearchBarStyles};
+  ${props => props.searchBarStyles}
 `;
 
 const SearchBtn = styled.button`
@@ -100,6 +114,6 @@ const SearchIcon = styled(FontAwesomeIcon)`
 `;
 
 export default GoogleApiWrapper((props) => ({
-  LoadingContainer: Loader,
+  LoadingContainer: MakeLoader(props),
   apiKey: props.apiKey,
 }))(DealerSearch);

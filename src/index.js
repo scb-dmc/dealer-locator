@@ -27,7 +27,8 @@ class DealerLocator extends React.Component {
       mapCenter: defaultStartingLocation,
       mapBoundary: null,
       mapZoom: null,
-      selectedDealer: null
+      selectedDealer: null,
+      isDealerFilterSelected: false
     };
   }
 
@@ -159,19 +160,30 @@ class DealerLocator extends React.Component {
     this.setState({ selectedDealer: null });
   };
 
+  onlineFilterIsSelected = () => {
+    this.setState({
+      isDealerFilterSelected: !this.state.isDealerFilterSelected,
+    });
+  };
+
   render() {
     const DealerDetailsComponent = this.props.dealerDetailsComponent ? this.props.dealerDetailsComponent : DealerDetails;
 
     return (
       <DealerLocatorWrapper>
         <SearchArea>
-          <DealerSearch
-            google={this.props.google}
-            goToMapLocation={this.goToMapLocation}
-            key={"DealerSearch"}
-            goToSearchLocation={this.goToSearchLocation}
-            apiKey={this.props.apiKey}
-          />
+            <DealerSearch
+              google={this.props.google}
+              goToMapLocation={this.goToMapLocation}
+              key={"DealerSearch"}
+              goToSearchLocation={this.goToSearchLocation}
+              apiKey={this.props.apiKey}
+              placeholder={this.props.placeholder}
+              searchIcon={this.props.searchIcon}
+              searchBarStyles={this.props.searchBarStyles}
+              dealerFilterEvent={this.onlineFilterIsSelected}
+              dealerFilterButton={this.props.dealerFilterButton}
+            />
         </SearchArea>
         <ListArea
           ref={this.dealerListAreaRef}
@@ -186,6 +198,7 @@ class DealerLocator extends React.Component {
             mapBoundary={this.state.mapBoundary}
             border={this.props.border}
             dealerCardComponent={this.props.dealerCardComponent}
+            filterOnlineDealers={this.state.isDealerFilterSelected}
           />
         </ListArea>
         <MapArea>
@@ -298,6 +311,7 @@ DealerLocator.propTypes = {
   apiKey: PropTypes.string.isRequired,
   dealerDetailsComponent: PropTypes.element.isRequired,
   dealerCardComponent: PropTypes.element.isRequired,
+  dealerSearchComponent: PropTypes.element.isRequired
 };
 
 DealerLocatorWrapper.defaultProps = {
