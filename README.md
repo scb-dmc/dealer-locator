@@ -101,3 +101,5 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 * `placeholder`: A prop that accepts a string for the search bar placeholder.
 * `searchIcon`: A React component to create a search button icon.
 * `searchBarStyles`: Custom CSS styles for search bar.
+* `dealerFilterEvent`: Event prop to sort dealer list.
+* `dealerFilterButton`: A React component to customize sort button text and appearance.
