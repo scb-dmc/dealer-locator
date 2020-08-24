@@ -17,6 +17,7 @@ import ReserveIcon from "../../images/ReserveDealerIconRed.svg";
 import Button from "../atoms/button";
 import SearchIcon from "../components/atoms/search-icon";
 import searchBarStyles from "../utils/searchbar-styles";
+import DealerFilterButton from "../components/atoms/dealer-filter-button";
 
 const ReserveDealerLocator = props => {
   return (
@@ -32,6 +33,7 @@ const ReserveDealerLocator = props => {
         placeholder='Find a retailer'
         searchIcon={<SearchIcon />}
         searchBarStyles={searchBarStyles}
+        dealerFilterButton={<DealerFilterButton primaryText="Find Santa Cruz" linkText="online" />}
       />
     </Layout>
   );
@@ -101,5 +103,4 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 * `placeholder`: A prop that accepts a string for the search bar placeholder.
 * `searchIcon`: A React component to create a search button icon.
 * `searchBarStyles`: Custom CSS styles for search bar.
-* `dealerFilterEvent`: Event prop to sort dealer list.
-* `dealerFilterButton`: A React component to customize sort button text and appearance.
+* `dealerFilterButton`: A React component to filter by online dealers in the list.
