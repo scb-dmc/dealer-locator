@@ -15,6 +15,9 @@ import Border from "../atoms/border";
 import CloseButton from "../atoms/close-button";
 import ReserveIcon from "../../images/ReserveDealerIconRed.svg";
 import Button from "../atoms/button";
+import SearchIcon from "../components/atoms/search-icon";
+import searchBarStyles from "../utils/searchbar-styles";
+import DealerFilterButton from "../components/atoms/dealer-filter-button";
 
 const ReserveDealerLocator = props => {
   return (
@@ -27,6 +30,10 @@ const ReserveDealerLocator = props => {
         dealerWebsiteButton={<Button title="Website" externalLink={true} />}
         dealerDetailsComponent={DealerDetails}
         dealerCardComponent={DealerCard}
+        placeholder='Find a retailer'
+        searchIcon={<SearchIcon />}
+        searchBarStyles={searchBarStyles}
+        dealerFilterButton={<DealerFilterButton primaryText="Find Santa Cruz" linkText="online" />}
       />
     </Layout>
   );
@@ -93,3 +100,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
   automatically*.
 * `dealerDetailsComponent`: A React component to extend the dealer details flyout.
 * `dealerCardComponent`: A React component to extend the dealer card within the primary dealer list.
+* `placeholder`: A prop that accepts a string for the search bar placeholder.
+* `searchIcon`: A React component to create a search button icon.
+* `searchBarStyles`: Custom CSS styles for search bar.
+* `dealerFilterButton`: A React component to filter by online dealers in the list.
