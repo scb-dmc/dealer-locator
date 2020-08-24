@@ -45,9 +45,7 @@ const DealerCard = (dealer, key, onDealerClicked, theme) => (
 );
 
 const filterByOnlineDealer = dealer => {
-  if (dealer.online) {
-    return dealer;
-  }
+  return dealer.online;
 };
 
 const DealerList = ({
@@ -60,10 +58,10 @@ const DealerList = ({
   dealerCardComponent,
   filterOnlineDealers
 }) => {
-  const DealerFilterProp = filterOnlineDealers;
+  const OnlineDealerFilterProp = filterOnlineDealers;
 
   const dealersOnMap = _.filter(dealers, (dealer) => {
-    return DealerFilterProp ? filterByOnlineDealer(dealer) : isLocationWithinBoundary(dealer.location, mapBoundary)
+    return OnlineDealerFilterProp ? filterByOnlineDealer(dealer) : isLocationWithinBoundary(dealer.location, mapBoundary)
   });
 
   const dealersOffMap = _.filter(
