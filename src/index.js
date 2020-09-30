@@ -28,7 +28,7 @@ class DealerLocator extends React.Component {
       mapBoundary: null,
       mapZoom: null,
       selectedDealer: null,
-      isDealerFilterSelected: false
+      isDealerFilterSelected: false,
     };
   }
 
@@ -167,23 +167,25 @@ class DealerLocator extends React.Component {
   };
 
   render() {
-    const DealerDetailsComponent = this.props.dealerDetailsComponent ? this.props.dealerDetailsComponent : DealerDetails;
+    const DealerDetailsComponent = this.props.dealerDetailsComponent
+      ? this.props.dealerDetailsComponent
+      : DealerDetails;
 
     return (
       <DealerLocatorWrapper>
         <SearchArea>
-            <DealerSearch
-              google={this.props.google}
-              goToMapLocation={this.goToMapLocation}
-              key={"DealerSearch"}
-              goToSearchLocation={this.goToSearchLocation}
-              apiKey={this.props.apiKey}
-              placeholder={this.props.placeholder}
-              searchIcon={this.props.searchIcon}
-              searchBarStyles={this.props.searchBarStyles}
-              dealerFilterEvent={this.onlineFilterIsSelected}
-              dealerFilterButton={this.props.dealerFilterButton}
-            />
+          <DealerSearch
+            google={this.props.google}
+            goToMapLocation={this.goToMapLocation}
+            key={"DealerSearch"}
+            goToSearchLocation={this.goToSearchLocation}
+            apiKey={this.props.apiKey}
+            placeholder={this.props.placeholder}
+            searchIcon={this.props.searchIcon}
+            searchBarStyles={this.props.searchBarStyles}
+            dealerFilterEvent={this.onlineFilterIsSelected}
+            dealerFilterButton={this.props.dealerFilterButton}
+          />
         </SearchArea>
         <ListArea
           ref={this.dealerListAreaRef}
@@ -215,10 +217,10 @@ class DealerLocator extends React.Component {
         </MapArea>
         <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
           <DealerDetailsComponent
-             dealer={this.state.selectedDealer}
-             close={this.clearSelectedDealer}
-             closeButton={this.props.closeDealerButton}
-             websiteButton={this.props.dealerWebsiteButton}
+            dealer={this.state.selectedDealer}
+            close={this.clearSelectedDealer}
+            closeButton={this.props.closeDealerButton}
+            websiteButton={this.props.dealerWebsiteButton}
           />
         </DealerDetailsWrapper>
       </DealerLocatorWrapper>
@@ -309,9 +311,9 @@ DealerLocator.propTypes = {
   closeDealerButton: PropTypes.element.isRequired,
   dealerWebsiteButton: PropTypes.element.isRequired,
   apiKey: PropTypes.string.isRequired,
-  dealerDetailsComponent: PropTypes.element.isRequired,
-  dealerCardComponent: PropTypes.element.isRequired,
-  dealerSearchComponent: PropTypes.element.isRequired
+  dealerDetailsComponent: PropTypes.func.isRequired,
+  dealerCardComponent: PropTypes.func.isRequired,
+  dealerSearchComponent: PropTypes.func.isRequired,
 };
 
 DealerLocatorWrapper.defaultProps = {
