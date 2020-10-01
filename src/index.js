@@ -313,7 +313,7 @@ DealerLocator.propTypes = {
   apiKey: PropTypes.string.isRequired,
   dealerDetailsComponent: PropTypes.func.isRequired,
   dealerCardComponent: PropTypes.func.isRequired,
-  dealerSearchComponent: PropTypes.func.isRequired,
+  dealerSearchComponent: PropTypes.func,
 };
 
 DealerLocatorWrapper.defaultProps = {
