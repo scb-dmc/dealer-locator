@@ -242,14 +242,13 @@ const DealerLocatorWrapper = styled.div`
     "search map map"
     "list   map map"
     "list   map map";
-
+    
   grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
-
-  @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
-    grid-template-areas:
-      "search map"
-      "map map";
-    grid-template-columns: 50vw 50vw;
+  
+  @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) { 
+     grid-template-areas:
+      "search"
+      "map";
   }
 `;
 
@@ -286,7 +285,6 @@ const SearchArea = styled.div`
 
 const MapArea = styled.div`
   grid-area: map;
-  position: relative;
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     grid-area: auto;
@@ -299,6 +297,7 @@ const MapArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
+  
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     display: none;
   }
