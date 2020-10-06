@@ -172,7 +172,7 @@ class DealerLocator extends React.Component {
       : DealerDetails;
 
     return (
-      <DealerLocatorWrapper>
+      <DealerLocatorWrapper visible={!!this.state.selectedDealer}>
         <SearchArea>
           <DealerSearch
             google={this.props.google}
@@ -203,7 +203,7 @@ class DealerLocator extends React.Component {
             filterOnlineDealers={this.state.isDealerFilterSelected}
           />
         </ListArea>
-        <MapArea>
+        <MapArea visible={!!this.state.selectedDealer}>
           <DealerMap
             dealers={this.dealersWithSelectedFlag()}
             initialCenter={defaultStartingLocation}
@@ -246,9 +246,8 @@ const DealerLocatorWrapper = styled.div`
   grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
   
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) { 
-     grid-template-areas:
-      "search"
-      "map";
+     grid-template-areas: ${(props) => props.visible ? `"search map" "map map"` : `"search" "map"`};
+     grid-template-columns: 50vw 50vw;
   }
 `;
 
@@ -285,6 +284,7 @@ const SearchArea = styled.div`
 
 const MapArea = styled.div`
   grid-area: map;
+  position: ${(props) => props.visible ? 'relative' : 'initial'};
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     grid-area: auto;
