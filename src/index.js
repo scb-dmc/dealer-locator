@@ -247,7 +247,7 @@ const DealerLocatorWrapper = styled.div`
   
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) { 
      grid-template-areas: ${(props) => props.visible ? `"search map" "map map"` : `"search" "map"`};
-     grid-template-columns: 50vw 50vw;
+     grid-template-columns: 75vw 25vw;
   }
 `;
 
