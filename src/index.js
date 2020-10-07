@@ -172,7 +172,7 @@ class DealerLocator extends React.Component {
       : DealerDetails;
 
     return (
-      <DealerLocatorWrapper>
+      <DealerLocatorWrapper isDealerSelected={!!this.state.selectedDealer}>
         <SearchArea>
           <DealerSearch
             google={this.props.google}
@@ -203,7 +203,7 @@ class DealerLocator extends React.Component {
             filterOnlineDealers={this.state.isDealerFilterSelected}
           />
         </ListArea>
-        <MapArea>
+        <MapArea isDealerSelected={!!this.state.selectedDealer}>
           <DealerMap
             dealers={this.dealersWithSelectedFlag()}
             initialCenter={defaultStartingLocation}
@@ -215,7 +215,7 @@ class DealerLocator extends React.Component {
             apiKey={this.props.apiKey}
           />
         </MapArea>
-        <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
+        <DealerDetailsWrapper isDealerSelected={!!this.state.selectedDealer}>
           <DealerDetailsComponent
             dealer={this.state.selectedDealer}
             close={this.clearSelectedDealer}
@@ -246,9 +246,8 @@ const DealerLocatorWrapper = styled.div`
   grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
   
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) { 
-     grid-template-areas:
-      "search"
-      "map";
+     grid-template-areas: ${(props) => props.isDealerSelected ? `"search map" "map map"` : `"search" "map"`};
+     grid-template-columns: ${(props) => props.isDealerSelected ? '1fr 30%' : 'none'};
   }
 `;
 
@@ -257,7 +256,7 @@ const DealerDetailsWrapper = styled.div`
   grid-area: search / list / list;
   background: white;
   transition: transform 0.25s ease-in-out;
-  transform: translate(${(props) => (props.visible ? 0 : "calc(-100vw)")});
+  transform: translate(${(props) => (props.isDealerSelected ? 0 : "calc(-100vw)")});
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     position: absolute;
@@ -285,6 +284,7 @@ const SearchArea = styled.div`
 
 const MapArea = styled.div`
   grid-area: map;
+  position: ${(props) => props.isDealerSelected ? 'relative' : 'initial'};
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     grid-area: auto;
