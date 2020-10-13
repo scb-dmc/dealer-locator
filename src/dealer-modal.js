@@ -31,15 +31,15 @@ const DealerModal = ({
             <DealerList>
               {_.map(dealers.onlineDealers, (dealer) => (
                 <a
-                  href={dealer.data.dealer_homepage.url}
+                  href={_.get(dealer, "data.dealer_homepage.url", "#")}
                   target="_blank"
                   rel="noreferrer noopener"
                   key={dealer.uid}
                 >
                   <DealerListRow>
                     <img
-                      src={dealer.data.dealer_logo.url}
-                      alt={dealer.data.dealer_logo.alt}
+                      src={_.get(dealer, "data.dealer_logo.url", "")}
+                      alt={_.get(dealer, "data.dealer_logo.alt", "")}
                     />
                   </DealerListRow>
                 </a>
