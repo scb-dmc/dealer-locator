@@ -34,8 +34,9 @@ const DealerModal = ({
                   href={dealer.data.dealer_homepage.url}
                   target="_blank"
                   rel="noreferrer noopener"
+                  key={dealer.uid}
                 >
-                  <DealerListRow key={dealer.uid}>
+                  <DealerListRow>
                     <img
                       src={dealer.data.dealer_logo.url}
                       alt={dealer.data.dealer_logo.alt}

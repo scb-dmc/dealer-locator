@@ -174,60 +174,6 @@ class DealerLocator extends React.Component {
       : DealerDetails;
 
     return (
-<<<<<<< HEAD
-      <DealerLocatorWrapper isDealerSelected={!!this.state.selectedDealer}>
-        <SearchArea>
-          <DealerSearch
-            google={this.props.google}
-            goToMapLocation={this.goToMapLocation}
-            key={"DealerSearch"}
-            goToSearchLocation={this.goToSearchLocation}
-            apiKey={this.props.apiKey}
-            placeholder={this.props.placeholder}
-            searchIcon={this.props.searchIcon}
-            searchBarStyles={this.props.searchBarStyles}
-            dealerFilterEvent={this.onlineFilterIsSelected}
-            dealerFilterButton={this.props.dealerFilterButton}
-          />
-        </SearchArea>
-        <ListArea
-          ref={this.dealerListAreaRef}
-          allowScroll={!this.state.selectedDealer}
-          dealerSelected={!!this.state.selectedDealer}
-        >
-          <DealerList
-            key={"DealerList"}
-            dealers={this.dealersWithSelectedFlag()}
-            onDealerClicked={this.onDealerSelected}
-            mapCenter={this.state.mapCenter}
-            mapBoundary={this.state.mapBoundary}
-            border={this.props.border}
-            dealerCardComponent={this.props.dealerCardComponent}
-            filterOnlineDealers={this.state.isDealerFilterSelected}
-          />
-        </ListArea>
-        <MapArea isDealerSelected={!!this.state.selectedDealer}>
-          <DealerMap
-            dealers={this.dealersWithSelectedFlag()}
-            initialCenter={defaultStartingLocation}
-            onBoundsChanged={this.onBoundsChanged}
-            onDealerMarkerClicked={this.onDealerSelected}
-            onReady={this.onMapReady}
-            unselectedDealerIcon={this.props.unselectedDealerIcon}
-            selectedDealerIcon={this.props.selectedDealerIcon}
-            apiKey={this.props.apiKey}
-          />
-        </MapArea>
-        <DealerDetailsWrapper isDealerSelected={!!this.state.selectedDealer}>
-          <DealerDetailsComponent
-            dealer={this.state.selectedDealer}
-            close={this.clearSelectedDealer}
-            closeButton={this.props.closeDealerButton}
-            websiteButton={this.props.dealerWebsiteButton}
-          />
-        </DealerDetailsWrapper>
-      </DealerLocatorWrapper>
-=======
       <>
         <DealerModal
           open={this.state.onlineModalOpen}
@@ -237,7 +183,10 @@ class DealerLocator extends React.Component {
           theme={this.props.theme}
           text={this.props.findOnlineText}
         />
-        <DealerLocatorWrapper theme={this.props.theme}>
+        <DealerLocatorWrapper
+          theme={this.props.theme}
+          isDealerSelected={!!this.state.selectedDealer}
+        >
           <SearchArea>
             <DealerSearch
               google={this.props.google}
@@ -266,7 +215,7 @@ class DealerLocator extends React.Component {
               dealerCardComponent={this.props.dealerCardComponent}
             />
           </ListArea>
-          <MapArea>
+          <MapArea isDealerSelected={!!this.state.selectedDealer}>
             <DealerMap
               dealers={this.dealersWithSelectedFlag()}
               initialCenter={defaultStartingLocation}
@@ -285,7 +234,7 @@ class DealerLocator extends React.Component {
               theme={this.props.theme}
             />
           </OnlineArea>
-          <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
+          <DealerDetailsWrapper isDealerSelected={!!this.state.selectedDealer}>
             <DealerDetailsComponent
               dealer={this.state.selectedDealer}
               close={this.clearSelectedDealer}
@@ -295,7 +244,6 @@ class DealerLocator extends React.Component {
           </DealerDetailsWrapper>
         </DealerLocatorWrapper>
       </>
->>>>>>> Add modal for online dealers
     );
   }
 }
@@ -313,15 +261,6 @@ const DealerLocatorWrapper = styled.div`
   grid-template-areas:
     "search map map"
     "list   map map"
-<<<<<<< HEAD
-    "list   map map";
-    
-  grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
-  
-  @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) { 
-     grid-template-areas: ${(props) => props.isDealerSelected ? `"search map" "map map"` : `"search" "map"`};
-     grid-template-columns: ${(props) => props.isDealerSelected ? '1fr 30%' : 'none'};
-=======
     "list   map map"
     "list   online online";
 
@@ -335,18 +274,18 @@ const DealerLocatorWrapper = styled.div`
       "search"
       "map"
       "online";
-    grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
->>>>>>> Add modal for online dealers
   }
 `;
 
 const DealerDetailsWrapper = styled.div`
   z-index: 5;
-  grid-area: search / list / list;
+  grid-area: search / map / online;
   background: white;
   transition: transform 0.25s ease-in-out;
-  transform: translate(${(props) => (props.isDealerSelected ? 0 : "calc(-100vw)")});
+  transform: translate(
+    ${(props) => (props.isDealerSelected ? 0 : "calc(-100vw)")}
+  );
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     position: absolute;
@@ -376,11 +315,7 @@ const MapArea = styled.div`
   width: 100%;
   height: 100%;
   grid-area: map;
-<<<<<<< HEAD
-  position: ${(props) => props.isDealerSelected ? 'relative' : 'initial'};
-=======
 `;
->>>>>>> Add modal for online dealers
 
 const OnlineArea = styled.div`
   grid-area: online;
