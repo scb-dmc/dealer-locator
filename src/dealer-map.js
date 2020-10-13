@@ -13,7 +13,10 @@ class DealerMap extends React.Component {
       console.error("no google?");
       return;
     }
-    this.unselectedDealerIcon = this.buildIcon(this.props.unselectedDealerIcon, 20);
+    this.unselectedDealerIcon = this.buildIcon(
+      this.props.unselectedDealerIcon,
+      20
+    );
     this.selectedDealerIcon = this.buildIcon(this.props.selectedDealerIcon, 30);
   }
 
