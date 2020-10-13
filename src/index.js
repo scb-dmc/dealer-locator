@@ -10,6 +10,7 @@ import DealerMap from "./dealer-map";
 import DealerSearch from "./dealer-search";
 import { reserve } from "./theme";
 import { createMapBounds } from "./utils";
+import DealerModal, { FindDealersLink } from "./dealer-modal.js";
 
 const defaultStartingLocation = { lat: 36.9596054, lng: -122.0564889 };
 
@@ -29,6 +30,7 @@ class DealerLocator extends React.Component {
       mapZoom: null,
       selectedDealer: null,
       isDealerFilterSelected: false,
+      onlineModalOpen: false,
     };
   }
 
@@ -160,9 +162,9 @@ class DealerLocator extends React.Component {
     this.setState({ selectedDealer: null });
   };
 
-  onlineFilterIsSelected = () => {
+  toggleOnlineModal = (e) => {
     this.setState({
-      isDealerFilterSelected: !this.state.isDealerFilterSelected,
+      onlineModalOpen: !this.state.onlineModalOpen,
     });
   };
 
@@ -172,6 +174,7 @@ class DealerLocator extends React.Component {
       : DealerDetails;
 
     return (
+<<<<<<< HEAD
       <DealerLocatorWrapper isDealerSelected={!!this.state.selectedDealer}>
         <SearchArea>
           <DealerSearch
@@ -224,6 +227,75 @@ class DealerLocator extends React.Component {
           />
         </DealerDetailsWrapper>
       </DealerLocatorWrapper>
+=======
+      <>
+        <DealerModal
+          open={this.state.onlineModalOpen}
+          dealers={this.props.onlineDealers}
+          toggleModal={this.toggleOnlineModal}
+          closeModalButton={this.props.closeModalButton}
+          theme={this.props.theme}
+          text={this.props.findOnlineText}
+        />
+        <DealerLocatorWrapper theme={this.props.theme}>
+          <SearchArea>
+            <DealerSearch
+              google={this.props.google}
+              goToMapLocation={this.goToMapLocation}
+              key={"DealerSearch"}
+              goToSearchLocation={this.goToSearchLocation}
+              apiKey={this.props.apiKey}
+              placeholder={this.props.placeholder}
+              searchIcon={this.props.searchIcon}
+              searchBarStyles={this.props.searchBarStyles}
+            />
+          </SearchArea>
+          <ListArea
+            ref={this.dealerListAreaRef}
+            allowScroll={!this.state.selectedDealer}
+            dealerSelected={!!this.state.selectedDealer}
+            theme={this.props.theme}
+          >
+            <DealerList
+              key={"DealerList"}
+              dealers={this.dealersWithSelectedFlag()}
+              onDealerClicked={this.onDealerSelected}
+              mapCenter={this.state.mapCenter}
+              mapBoundary={this.state.mapBoundary}
+              border={this.props.border}
+              dealerCardComponent={this.props.dealerCardComponent}
+            />
+          </ListArea>
+          <MapArea>
+            <DealerMap
+              dealers={this.dealersWithSelectedFlag()}
+              initialCenter={defaultStartingLocation}
+              onBoundsChanged={this.onBoundsChanged}
+              onDealerMarkerClicked={this.onDealerSelected}
+              onReady={this.onMapReady}
+              unselectedDealerIcon={this.props.unselectedDealerIcon}
+              selectedDealerIcon={this.props.selectedDealerIcon}
+              apiKey={this.props.apiKey}
+            />
+          </MapArea>
+          <OnlineArea>
+            <FindDealersLink
+              text={this.props.findOnlineText}
+              onClick={this.toggleOnlineModal}
+              theme={this.props.theme}
+            />
+          </OnlineArea>
+          <DealerDetailsWrapper visible={!!this.state.selectedDealer}>
+            <DealerDetailsComponent
+              dealer={this.state.selectedDealer}
+              close={this.clearSelectedDealer}
+              closeButton={this.props.closeDealerButton}
+              websiteButton={this.props.dealerWebsiteButton}
+            />
+          </DealerDetailsWrapper>
+        </DealerLocatorWrapper>
+      </>
+>>>>>>> Add modal for online dealers
     );
   }
 }
@@ -241,6 +313,7 @@ const DealerLocatorWrapper = styled.div`
   grid-template-areas:
     "search map map"
     "list   map map"
+<<<<<<< HEAD
     "list   map map";
     
   grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
@@ -248,6 +321,23 @@ const DealerLocatorWrapper = styled.div`
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) { 
      grid-template-areas: ${(props) => props.isDealerSelected ? `"search map" "map map"` : `"search" "map"`};
      grid-template-columns: ${(props) => props.isDealerSelected ? '1fr 30%' : 'none'};
+=======
+    "list   map map"
+    "list   online online";
+
+  @media screen and (min-width: ${(props) =>
+      props.theme.sideBySideLayoutBreakpoint}) {
+    grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
+  }
+
+  @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
+    grid-template-areas:
+      "search"
+      "map"
+      "online";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+>>>>>>> Add modal for online dealers
   }
 `;
 
@@ -275,7 +365,6 @@ const SearchArea = styled.div`
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
     padding-top: 11px;
     padding-left: 11px;
-    width: 330px;
     height: fit-content;
     box-sizing: content-box;
     max-width: calc(100vw - (11px + ${(props) => props.theme.pagePaddingSide}));
@@ -283,22 +372,27 @@ const SearchArea = styled.div`
 `;
 
 const MapArea = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
   grid-area: map;
+<<<<<<< HEAD
   position: ${(props) => props.isDealerSelected ? 'relative' : 'initial'};
+=======
+`;
+>>>>>>> Add modal for online dealers
 
-  @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
-    grid-area: auto;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-  }
+const OnlineArea = styled.div`
+  grid-area: online;
+  margin: 1rem 1rem 1rem 0;
 `;
 
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
-  
-  @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
+
+  @media screen and (max-width: ${(props) =>
+      props.theme.sideBySideLayoutBreakpoint}) {
     display: none;
   }
 `;
@@ -313,9 +407,10 @@ DealerLocator.propTypes = {
   dealerDetailsComponent: PropTypes.func.isRequired,
   dealerCardComponent: PropTypes.func.isRequired,
   dealerSearchComponent: PropTypes.func,
+  findOnlineText: PropTypes.string,
 };
 
-DealerLocatorWrapper.defaultProps = {
+DealerLocator.defaultProps = {
   theme: reserve.theme,
 };
 

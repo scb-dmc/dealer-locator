@@ -25,58 +25,63 @@ class DealerSearch extends React.Component {
 
   render() {
     return (
-        <>
+      <>
         <SearchWrapper>
-             <StyledSearchBar
-                 placeholder={this.props.placeholder ? this.props.placeholder : 'Find a dealer'}
-                 types={["(cities)"]}
-                 searchBarStyles={this.props.searchBarStyles}
-                 onChange={this.onChange}
-                 google={this.props.google}
-                 onPlaceSelected={(places) => {
-                     if (places.length > 0) {
-                         return this.props.goToMapLocation({
-                             lat: places[0].geometry.location.lat(),
-                             lng: places[0].geometry.location.lng(),
-                         });
-                     }
-                 }}
-             />
-             <SearchBtn
-                 aria-label="search button"
-                 onClick={() => this.props.goToSearchLocation(this.state.searchValue)}
-             >
-                 {this.props.searchIcon ? this.props.searchIcon :
-                 <SearchIcon icon={faSearch} /> }
-             </SearchBtn>
+          <StyledSearchBar
+            placeholder={
+              this.props.placeholder ? this.props.placeholder : "Find a dealer"
+            }
+            types={["(cities)"]}
+            searchBarStyles={this.props.searchBarStyles}
+            onChange={this.onChange}
+            google={this.props.google}
+            onPlaceSelected={(places) => {
+              if (places.length > 0) {
+                return this.props.goToMapLocation({
+                  lat: places[0].geometry.location.lat(),
+                  lng: places[0].geometry.location.lng(),
+                });
+              }
+            }}
+          />
+          <SearchBtn
+            aria-label="search button"
+            onClick={() =>
+              this.props.goToSearchLocation(this.state.searchValue)
+            }
+          >
+            {this.props.searchIcon ? (
+              this.props.searchIcon
+            ) : (
+              <SearchIcon icon={faSearch} />
+            )}
+          </SearchBtn>
         </SearchWrapper>
-            <div onClick={this.props.dealerFilterEvent}>
-                {this.props.dealerFilterButton}
-            </div>
-        </>
+      </>
     );
   }
 }
 
 const MakeLoader = (props) => {
-    return () => {
-        return(
-            <SearchWrapper>
-                <SearchBarLoading searchBarStyles={props.searchBarStyles}>Search Options Loading...</SearchBarLoading>
-                <SearchBtn aria-label="search button">
-                    { props.searchIcon ? props.searchIcon :
-                    <SearchIcon icon={faSearch} /> }
-                </SearchBtn>
-            </SearchWrapper>
-        )
-    }
-}
+  return () => {
+    return (
+      <SearchWrapper>
+        <SearchBarLoading searchBarStyles={props.searchBarStyles}>
+          Search Options Loading...
+        </SearchBarLoading>
+        <SearchBtn aria-label="search button">
+          {props.searchIcon ? props.searchIcon : <SearchIcon icon={faSearch} />}
+        </SearchBtn>
+      </SearchWrapper>
+    );
+  };
+};
 
 const SearchWrapper = styled.div`
   display: flex;
   flex-flow: row;
   position: relative;
-  left: 1rem;
+  left: 1.25rem;
 `;
 
 const defaultSearchBarStyles = `
@@ -90,12 +95,12 @@ const defaultSearchBarStyles = `
 
 const SearchBarLoading = styled.div`
   ${defaultSearchBarStyles};
-  ${props => props.searchBarStyles}
+  ${(props) => props.searchBarStyles}
 `;
 
 const StyledSearchBar = styled(AutoCompleteSearch)`
   ${defaultSearchBarStyles};
-  ${props => props.searchBarStyles}
+  ${(props) => props.searchBarStyles}
 `;
 
 const SearchBtn = styled.button`
