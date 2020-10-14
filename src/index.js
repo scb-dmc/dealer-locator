@@ -325,6 +325,8 @@ const OnlineArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
+  /* This is based on a recommendation to add some buffer b/t the footer and list as items scroll in and out of view */
+  max-height: calc(100vh - 300px);
 
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {

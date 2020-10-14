@@ -2,7 +2,7 @@ const defaultTheme = {
   theme: {
     headerHeight: "84px",
     footerHeight: "31px",
-    menuSlideoutWidth: "322px",
+    menuSlideoutWidth: "352px",
     pagePaddingSide: "25px",
     sideBySideLayoutBreakpoint: "900px",
     textColorLight: "grey",
