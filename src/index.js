@@ -349,7 +349,7 @@ DealerLocator.propTypes = {
   dealerCardComponent: PropTypes.func.isRequired,
   dealerSearchComponent: PropTypes.func,
   findOnlineText: PropTypes.string,
-  slideOutWidth: PropTypes.string,
+  dealerListSlideOutWidth: PropTypes.string,
 };
 
 DealerLocator.defaultProps = {
