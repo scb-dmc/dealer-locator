@@ -55,6 +55,8 @@ const DealerList = ({
   mapBoundary,
   border,
   theme,
+  dealerListSlideOutWidth,
+  dealerListBottomBuffer,
   dealerCardComponent,
   filterOnlineDealers
 }) => {
@@ -78,11 +80,11 @@ const DealerList = ({
 
   return (
     <>
-      <List emphasized={true} theme={theme}>
+      <List emphasized={true} theme={theme} dealerListSlideOutWidth={dealerListSlideOutWidth} dealerListBottomBuffer={dealerListBottomBuffer}>
         {_.sortBy(dealersOnMap, sorter).map(dealerCardCreator)}
       </List>
       {!_.isEmpty(dealersOnMap) && border}
-      <List emphasized={false} theme={theme}>
+      <List emphasized={false} theme={theme} dealerListSlideOutWidth={dealerListSlideOutWidth} dealerListBottomBuffer={dealerListBottomBuffer}>
         {_.sortBy(dealersOffMap, sorter).map(dealerCardCreator)}
       </List>
     </>
@@ -124,6 +126,7 @@ DealerList.propTypes = {
   mapCenter: PropTypes.object,
   mapBoundary: PropTypes.object,
   border: PropTypes.element.isRequired,
+  dealerListBottomBuffer: PropTypes.string
 };
 
 DealerList.defaultProps = {

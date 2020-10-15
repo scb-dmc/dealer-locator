@@ -186,6 +186,7 @@ class DealerLocator extends React.Component {
         <DealerLocatorWrapper
           theme={this.props.theme}
           isDealerSelected={!!this.state.selectedDealer}
+          dealerListSlideOutWidth={this.props.dealerListSlideOutWidth}
         >
           <SearchArea>
             <DealerSearch
@@ -204,6 +205,7 @@ class DealerLocator extends React.Component {
             allowScroll={!this.state.selectedDealer}
             dealerSelected={!!this.state.selectedDealer}
             theme={this.props.theme}
+            dealerListBottomBuffer={this.props.dealerListBottomBuffer}
           >
             <DealerList
               key={"DealerList"}
@@ -266,7 +268,7 @@ const DealerLocatorWrapper = styled.div`
 
   @media screen and (min-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
-    grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
+    grid-template-columns: ${(props) => props.dealerListSlideOutWidth ? props.dealerListSlideOutWidth : props.theme.menuSlideoutWidth} 1fr;
   }
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
@@ -325,8 +327,7 @@ const OnlineArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
-  /* This is based on a recommendation to add some buffer b/t the footer and list as items scroll in and out of view */
-  max-height: calc(100vh - 300px);
+  max-height: calc(100vh - ${(props) => props.dealerListBottomBuffer});
 
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
@@ -345,6 +346,7 @@ DealerLocator.propTypes = {
   dealerCardComponent: PropTypes.func.isRequired,
   dealerSearchComponent: PropTypes.func,
   findOnlineText: PropTypes.string,
+  slideOutWidth: PropTypes.string,
 };
 
 DealerLocator.defaultProps = {
