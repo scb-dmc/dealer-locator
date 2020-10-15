@@ -36,17 +36,19 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
   return (
     <div>
       <CloseDealerButton>
-       <div onClick={close}>{closeButton}</div>
+        <div onClick={close}>{closeButton}</div>
       </CloseDealerButton>
       <DealerTextArea>
+        <DealerName>{dealer.name}</DealerName>
         <Details>
-            <DealerName>{dealer.name}</DealerName>
-            <DealerDetailRow>
+          <DealerDetailRow>
+            <DealerAddress>
               <div>{dealer.addr1}</div>
               <div>{`${dealer.city} ${dealer.city ? "," : ""} ${dealer.state} ${
                 dealer.zip
               } ${dealer.country}`}</div>
-            </DealerDetailRow>
+            </DealerAddress>
+          </DealerDetailRow>
 
           <DealerDetailRow>
             <DealerContact>
@@ -104,6 +106,11 @@ const DealerContact = styled.div`
   max-width: 300px;
 `;
 
+const DealerAddress = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
+
 const Icon = styled(FontAwesomeIcon)`
   margin-left: 5px;
 `;
@@ -117,18 +124,14 @@ const CloseDealerButton = styled.div`
 
 const DealerTextArea = styled.div`
   padding-right: 20px;
-  
-  div {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-  }
 `;
 
 const DealerName = styled.h1``;
 
 const DealerDetailRow = styled.div`
   margin-top: 20px;
+  display: flex;
+  align-items: flex-start;
 `;
 
 const Website = styled(DealerDetailRow)`

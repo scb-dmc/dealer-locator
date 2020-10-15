@@ -236,7 +236,10 @@ class DealerLocator extends React.Component {
               theme={this.props.theme}
             />
           </OnlineArea>
-          <DealerDetailsWrapper isDealerSelected={!!this.state.selectedDealer}>
+          <DealerDetailsWrapper
+            isDealerSelected={!!this.state.selectedDealer}
+            theme={this.props.theme}
+          >
             <DealerDetailsComponent
               dealer={this.state.selectedDealer}
               close={this.clearSelectedDealer}
@@ -260,15 +263,14 @@ const DealerLocatorWrapper = styled.div`
           ${(props) => props.theme.footerHeight}
       )
   );
-  grid-template-areas:
-    "search map map"
-    "list   map map"
-    "list   map map"
-    "list   online online";
-
   @media screen and (min-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
     grid-template-columns: ${(props) => props.dealerListSlideOutWidth ? props.dealerListSlideOutWidth : props.theme.menuSlideoutWidth} 1fr;
+    grid-template-areas:
+      "search map map"
+      "list   map map"
+      "list   map map"
+      "list   online online";
   }
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
@@ -277,12 +279,13 @@ const DealerLocatorWrapper = styled.div`
       "map"
       "online";
     grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
   }
 `;
 
 const DealerDetailsWrapper = styled.div`
   z-index: 5;
-  grid-area: search / map / online;
+  grid-area: search / list / list / list;
   background: white;
   transition: transform 0.25s ease-in-out;
   transform: translate(
@@ -290,8 +293,8 @@ const DealerDetailsWrapper = styled.div`
   );
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
+    grid-area: search / map / online;
     position: absolute;
-    grid-area: auto;
     height: 100%;
     width: 100%;
     top: 0px;
