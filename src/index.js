@@ -198,6 +198,7 @@ class DealerLocator extends React.Component {
               placeholder={this.props.placeholder}
               searchIcon={this.props.searchIcon}
               searchBarStyles={this.props.searchBarStyles}
+              theme={this.props.theme}
             />
           </SearchArea>
           <ListArea
@@ -334,7 +335,8 @@ const OnlineArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
-  margin-bottom: 56px;
+  margin-bottom: ${(props) =>
+    props.dealerListBottomBuffer ? props.dealerListBottomBuffer : "0px"};
 
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
