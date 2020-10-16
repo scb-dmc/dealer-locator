@@ -316,7 +316,6 @@ const SearchArea = styled.div`
     height: fit-content;
     box-sizing: content-box;
     width: 330px;
-    max-width: calc(100vw - (11px + ${(props) => props.theme.pagePaddingSide}));
   }
 `;
 
