@@ -188,7 +188,7 @@ class DealerLocator extends React.Component {
           isDealerSelected={!!this.state.selectedDealer}
           dealerListSlideOutWidth={this.props.dealerListSlideOutWidth}
         >
-          <SearchArea>
+          <SearchArea theme={this.props.theme}>
             <DealerSearch
               google={this.props.google}
               goToMapLocation={this.goToMapLocation}
@@ -198,6 +198,7 @@ class DealerLocator extends React.Component {
               placeholder={this.props.placeholder}
               searchIcon={this.props.searchIcon}
               searchBarStyles={this.props.searchBarStyles}
+              theme={this.props.theme}
             />
           </SearchArea>
           <ListArea
@@ -265,7 +266,10 @@ const DealerLocatorWrapper = styled.div`
   );
   @media screen and (min-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
-    grid-template-columns: ${(props) => props.dealerListSlideOutWidth ? props.dealerListSlideOutWidth : props.theme.menuSlideoutWidth} 1fr;
+    grid-template-columns: ${(props) =>
+        props.dealerListSlideOutWidth
+          ? props.dealerListSlideOutWidth
+          : props.theme.menuSlideoutWidth} 1fr;
     grid-template-areas:
       "search map map"
       "list   map map"
@@ -307,11 +311,12 @@ const SearchArea = styled.div`
   z-index: 2;
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
+    position: absolute;
     padding-top: 11px;
     padding-left: 11px;
     height: fit-content;
     box-sizing: content-box;
-    max-width: calc(100vw - (11px + ${(props) => props.theme.pagePaddingSide}));
+    width: 330px;
   }
 `;
 
@@ -330,7 +335,8 @@ const OnlineArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
-  max-height: calc(100vh - ${(props) => props.dealerListBottomBuffer});
+  margin-bottom: ${(props) =>
+    props.dealerListBottomBuffer ? props.dealerListBottomBuffer : "0px"};
 
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
