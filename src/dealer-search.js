@@ -104,6 +104,7 @@ const StyledSearchBar = styled(AutoCompleteSearch)`
 
 const SearchBtn = styled.button`
   border: 0;
+  outline: none;
   background-color: transparent;
   position: relative;
   bottom: 6px;
