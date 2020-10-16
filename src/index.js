@@ -186,6 +186,7 @@ class DealerLocator extends React.Component {
         <DealerLocatorWrapper
           theme={this.props.theme}
           isDealerSelected={!!this.state.selectedDealer}
+          dealerListSlideOutWidth={this.props.dealerListSlideOutWidth}
         >
           <SearchArea>
             <DealerSearch
@@ -204,6 +205,7 @@ class DealerLocator extends React.Component {
             allowScroll={!this.state.selectedDealer}
             dealerSelected={!!this.state.selectedDealer}
             theme={this.props.theme}
+            dealerListBottomBuffer={this.props.dealerListBottomBuffer}
           >
             <DealerList
               key={"DealerList"}
@@ -263,7 +265,7 @@ const DealerLocatorWrapper = styled.div`
   );
   @media screen and (min-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
-    grid-template-columns: calc(${(props) => props.theme.menuSlideoutWidth}) 1fr;
+    grid-template-columns: ${(props) => props.dealerListSlideOutWidth ? props.dealerListSlideOutWidth : props.theme.menuSlideoutWidth} 1fr;
     grid-template-areas:
       "search map map"
       "list   map map"
@@ -328,6 +330,7 @@ const OnlineArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
+  max-height: calc(100vh - ${(props) => props.dealerListBottomBuffer});
 
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
@@ -346,6 +349,7 @@ DealerLocator.propTypes = {
   dealerCardComponent: PropTypes.func.isRequired,
   dealerSearchComponent: PropTypes.func,
   findOnlineText: PropTypes.string,
+  dealerListSlideOutWidth: PropTypes.string,
 };
 
 DealerLocator.defaultProps = {
