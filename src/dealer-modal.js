@@ -29,7 +29,7 @@ const DealerModal = ({
           <ModalInner>
             <ModalHeader>{text}</ModalHeader>
             <DealerList>
-              {_.map(dealers.onlineDealers, (dealer) => (
+              {_.map(dealers, (dealer) => (
                 <a
                   href={_.get(dealer, "data.dealer_homepage.url", "#")}
                   target="_blank"
