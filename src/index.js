@@ -334,7 +334,7 @@ const OnlineArea = styled.div`
 const ListArea = styled.div`
   overflow-y: scroll;
   grid-area: list;
-  max-height: calc(100vh - ${(props) => props.dealerListBottomBuffer});
+  margin-bottom: 56px;
 
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
