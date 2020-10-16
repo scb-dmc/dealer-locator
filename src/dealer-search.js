@@ -81,7 +81,6 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-flow: row;
   position: relative;
-  left: 1.25rem;
 `;
 
 const defaultSearchBarStyles = `
