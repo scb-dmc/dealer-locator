@@ -188,7 +188,7 @@ class DealerLocator extends React.Component {
           isDealerSelected={!!this.state.selectedDealer}
           dealerListSlideOutWidth={this.props.dealerListSlideOutWidth}
         >
-          <SearchArea>
+          <SearchArea theme={this.props.theme}>
             <DealerSearch
               google={this.props.google}
               goToMapLocation={this.goToMapLocation}
@@ -265,7 +265,10 @@ const DealerLocatorWrapper = styled.div`
   );
   @media screen and (min-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
-    grid-template-columns: ${(props) => props.dealerListSlideOutWidth ? props.dealerListSlideOutWidth : props.theme.menuSlideoutWidth} 1fr;
+    grid-template-columns: ${(props) =>
+        props.dealerListSlideOutWidth
+          ? props.dealerListSlideOutWidth
+          : props.theme.menuSlideoutWidth} 1fr;
     grid-template-areas:
       "search map map"
       "list   map map"
@@ -307,10 +310,12 @@ const SearchArea = styled.div`
   z-index: 2;
 
   @media (max-width: ${(props) => props.theme.sideBySideLayoutBreakpoint}) {
+    position: absolute;
     padding-top: 11px;
     padding-left: 11px;
     height: fit-content;
     box-sizing: content-box;
+    width: 330px;
     max-width: calc(100vw - (11px + ${(props) => props.theme.pagePaddingSide}));
   }
 `;
