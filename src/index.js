@@ -11,6 +11,7 @@ import DealerSearch from "./dealer-search";
 import { reserve } from "./theme";
 import { createMapBounds } from "./utils";
 import DealerModal, { FindDealersLink } from "./dealer-modal.js";
+import DealerFilters from "./dealer-filters";
 
 const defaultStartingLocation = { lat: 36.9596054, lng: -122.0564889 };
 
@@ -31,6 +32,7 @@ class DealerLocator extends React.Component {
       selectedDealer: null,
       isDealerFilterSelected: false,
       onlineModalOpen: false,
+      activeFilters: [],
     };
   }
 
@@ -84,10 +86,15 @@ class DealerLocator extends React.Component {
   };
 
   dealersWithSelectedFlag = () => {
-    return _.map(this.props.dealers, (dealer) => ({
+    const dealers = _.map(this.props.dealers, (dealer) => ({
       ...dealer,
       selected: dealer.id === _.get(this.state, "selectedDealer.id"),
     }));
+
+    if (!this.state.activeFilters.length) return dealers;
+
+    const activeMatchers = _.map(this.state.activeFilters, (f) => f.matcher);
+    return _.filter(dealers, _.flow(activeMatchers));
   };
 
   /* Pan to map location & find nearest dealer on autocomplete selection,
@@ -168,6 +175,24 @@ class DealerLocator extends React.Component {
     });
   };
 
+  setFilter = (label, active) => {
+    if (active) {
+      this.setState({
+        activeFilters: [
+          ...this.state.activeFilters,
+          _.first(_.filter(this.props.filters, (f) => f.label === label)),
+        ],
+      });
+    } else {
+      this.setState({
+        activeFilters: _.filter(
+          this.state.activeFilters,
+          (f) => f.label !== label
+        ),
+      });
+    }
+  };
+
   render() {
     const DealerDetailsComponent = this.props.dealerDetailsComponent
       ? this.props.dealerDetailsComponent
@@ -200,7 +225,15 @@ class DealerLocator extends React.Component {
               searchBarStyles={this.props.searchBarStyles}
               theme={this.props.theme}
             />
+            <DealerFilters
+              filters={this.props.filters.map((f) => ({
+                ...f,
+                active: _.includes(this.state.activeFilters, f),
+              }))}
+              setFilter={this.setFilter}
+            />
           </SearchArea>
+
           <ListArea
             ref={this.dealerListAreaRef}
             allowScroll={!this.state.selectedDealer}
@@ -356,10 +389,12 @@ DealerLocator.propTypes = {
   dealerSearchComponent: PropTypes.func,
   findOnlineText: PropTypes.string,
   dealerListSlideOutWidth: PropTypes.string,
+  filters: PropTypes.array,
 };
 
 DealerLocator.defaultProps = {
   theme: reserve.theme,
+  filters: [],
 };
 
 export default DealerLocator;

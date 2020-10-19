@@ -32,19 +32,19 @@ const isLocationWithinBoundary = (location, boundary) => {
 };
 
 const DealerCard = (dealer, key, onDealerClicked, theme) => (
-    <Dealer key={key} onClick={() => onDealerClicked(dealer)} theme={theme}>
-      <DealerName>{dealer.name}</DealerName>
-      <DealerLocation>
-        {dealer.addr1} {dealer.city}
-        {(dealer.addr1 || dealer.city) && (dealer.state || dealer.zip)
-            ? ", "
-            : " "}
-          {dealer.state} {dealer.zip}
-      </DealerLocation>
-    </Dealer>
+  <Dealer key={key} onClick={() => onDealerClicked(dealer)} theme={theme}>
+    <DealerName>{dealer.name}</DealerName>
+    <DealerLocation>
+      {dealer.addr1} {dealer.city}
+      {(dealer.addr1 || dealer.city) && (dealer.state || dealer.zip)
+        ? ", "
+        : " "}
+      {dealer.state} {dealer.zip}
+    </DealerLocation>
+  </Dealer>
 );
 
-const filterByOnlineDealer = dealer => {
+const filterByOnlineDealer = (dealer) => {
   return dealer.online;
 };
 
@@ -58,12 +58,15 @@ const DealerList = ({
   dealerListSlideOutWidth,
   dealerListBottomBuffer,
   dealerCardComponent,
-  filterOnlineDealers
+  filterOnlineDealers,
 }) => {
+  console.log("rendering dealer list with dealers", dealers);
   const OnlineDealerFilterProp = filterOnlineDealers;
 
   const dealersOnMap = _.filter(dealers, (dealer) => {
-    return OnlineDealerFilterProp ? filterByOnlineDealer(dealer) : isLocationWithinBoundary(dealer.location, mapBoundary)
+    return OnlineDealerFilterProp
+      ? filterByOnlineDealer(dealer)
+      : isLocationWithinBoundary(dealer.location, mapBoundary);
   });
 
   const dealersOffMap = _.filter(
@@ -76,15 +79,27 @@ const DealerList = ({
   const DealerCardProp = dealerCardComponent;
 
   const dealerCardCreator = (dealer, idx) =>
-    DealerCardProp ? dealerCardComponent(dealer, idx, onDealerClicked) : DealerCard(dealer, idx, onDealerClicked, theme);
+    DealerCardProp
+      ? dealerCardComponent(dealer, idx, onDealerClicked)
+      : DealerCard(dealer, idx, onDealerClicked, theme);
 
   return (
     <>
-      <List emphasized={true} theme={theme} dealerListSlideOutWidth={dealerListSlideOutWidth} dealerListBottomBuffer={dealerListBottomBuffer}>
+      <List
+        emphasized={true}
+        theme={theme}
+        dealerListSlideOutWidth={dealerListSlideOutWidth}
+        dealerListBottomBuffer={dealerListBottomBuffer}
+      >
         {_.sortBy(dealersOnMap, sorter).map(dealerCardCreator)}
       </List>
       {!_.isEmpty(dealersOnMap) && border}
-      <List emphasized={false} theme={theme} dealerListSlideOutWidth={dealerListSlideOutWidth} dealerListBottomBuffer={dealerListBottomBuffer}>
+      <List
+        emphasized={false}
+        theme={theme}
+        dealerListSlideOutWidth={dealerListSlideOutWidth}
+        dealerListBottomBuffer={dealerListBottomBuffer}
+      >
         {_.sortBy(dealersOffMap, sorter).map(dealerCardCreator)}
       </List>
     </>
@@ -96,8 +111,7 @@ const List = styled.ul`
     props.emphasized ? props.theme.textColorDark : props.theme.textColorLight};
 `;
 
-const DealerName = styled.h3`
-`;
+const DealerName = styled.h3``;
 
 const DealerLocation = styled.div`
   font-size: 0.9rem;
@@ -126,7 +140,7 @@ DealerList.propTypes = {
   mapCenter: PropTypes.object,
   mapBoundary: PropTypes.object,
   border: PropTypes.element.isRequired,
-  dealerListBottomBuffer: PropTypes.string
+  dealerListBottomBuffer: PropTypes.string,
 };
 
 DealerList.defaultProps = {
