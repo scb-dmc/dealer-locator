@@ -60,7 +60,6 @@ const DealerList = ({
   dealerCardComponent,
   filterOnlineDealers,
 }) => {
-  console.log("rendering dealer list with dealers", dealers);
   const OnlineDealerFilterProp = filterOnlineDealers;
 
   const dealersOnMap = _.filter(dealers, (dealer) => {

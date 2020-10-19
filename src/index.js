@@ -94,7 +94,10 @@ class DealerLocator extends React.Component {
     if (!this.state.activeFilters.length) return dealers;
 
     const activeMatchers = _.map(this.state.activeFilters, (f) => f.matcher);
-    return _.filter(dealers, _.flow(activeMatchers));
+    return _.intersectionBy(
+      ...activeMatchers.map((f) => _.filter(dealers, f)),
+      "id"
+    );
   };
 
   /* Pan to map location & find nearest dealer on autocomplete selection,
