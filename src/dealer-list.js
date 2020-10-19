@@ -3,6 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import _ from "lodash";
 
+import { isLocationWithinBoundary } from "./utils";
+
 import { reserve } from "./theme";
 
 const dealerDistanceCalculator = (location) => {
@@ -14,21 +16,6 @@ const dealerDistanceCalculator = (location) => {
 
     return dist;
   };
-};
-
-const isLocationWithinBoundary = (location, boundary) => {
-  if (!boundary) {
-    return false;
-  }
-  const belowNorthEastCorner =
-    location.lng < boundary.northEastCorner.lng &&
-    location.lat < boundary.northEastCorner.lat;
-
-  const aboveSouthWestCorner =
-    location.lng > boundary.southWestCorner.lng &&
-    location.lat > boundary.southWestCorner.lat;
-
-  return belowNorthEastCorner && aboveSouthWestCorner;
 };
 
 const DealerCard = (dealer, key, onDealerClicked, theme) => (

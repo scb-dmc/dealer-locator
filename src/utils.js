@@ -42,3 +42,33 @@ export const createMapBounds = (center, pointToInclude) => {
   }
   return latLngBounds;
 };
+
+export const isLocationWithinBoundary = (location, boundary) => {
+  if (!boundary) {
+    return false;
+  }
+
+  const boundaryCrossesDateline =
+    boundary.northEastCorner.lng < boundary.southWestCorner.lng;
+  const locationIsEastOfDateline = location.lng < 0;
+
+  const eastComparisonLng =
+    boundaryCrossesDateline && !locationIsEastOfDateline
+      ? 0
+      : boundary.northEastCorner.lng;
+
+  const westComparisonLng =
+    boundaryCrossesDateline && locationIsEastOfDateline
+      ? -180
+      : boundary.southWestCorner.lng;
+
+  const belowNorthEastCorner =
+    location.lng < eastComparisonLng &&
+    location.lat < boundary.northEastCorner.lat;
+
+  const aboveSouthWestCorner =
+    location.lng > westComparisonLng &&
+    location.lat > boundary.southWestCorner.lat;
+
+  return belowNorthEastCorner && aboveSouthWestCorner;
+};

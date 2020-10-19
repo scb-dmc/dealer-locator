@@ -9,7 +9,7 @@ import DealerList from "./dealer-list";
 import DealerMap from "./dealer-map";
 import DealerSearch from "./dealer-search";
 import { reserve } from "./theme";
-import { createMapBounds } from "./utils";
+import { createMapBounds, isLocationWithinBoundary } from "./utils";
 import DealerModal, { FindDealersLink } from "./dealer-modal.js";
 import DealerFilters from "./dealer-filters";
 
@@ -100,6 +100,28 @@ class DealerLocator extends React.Component {
     );
   };
 
+  findNearestDealer = (coord) => {
+    return _.first(
+      _.sortBy(this.dealersWithSelectedFlag(), (dealer) =>
+        this.calculateDistance(
+          dealer.location.lat,
+          coord.lat,
+          dealer.location.lng,
+          coord.lng
+        )
+      )
+    );
+  };
+
+  zoomToIncludeResults = () => {
+    const nearestDealer = this.findNearestDealer(this.state.mapCenter);
+    if (
+      !isLocationWithinBoundary(nearestDealer.location, this.state.mapBoundary)
+    ) {
+      this.goToMapLocation(this.state.mapCenter);
+    }
+  };
+
   /* Pan to map location & find nearest dealer on autocomplete selection,
      keyboard enter or search button click
   */
@@ -116,16 +138,7 @@ class DealerLocator extends React.Component {
     }
 
     // No zoom specified, so we'll need to figure out the correct zoom level based on the nearest dealer
-    let nearestDealer = _.first(
-      _.sortBy(this.props.dealers, (dealer) =>
-        this.calculateDistance(
-          dealer.location.lat,
-          coord.lat,
-          dealer.location.lng,
-          coord.lng
-        )
-      )
-    );
+    let nearestDealer = this.findNearestDealer(coord);
 
     const cartesianDistanceToNearestDealer = this.calculateDistance(
       nearestDealer.location.lat,
@@ -194,6 +207,7 @@ class DealerLocator extends React.Component {
         ),
       });
     }
+    setTimeout(this.zoomToIncludeResults, 0);
   };
 
   render() {
