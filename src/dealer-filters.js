@@ -7,11 +7,9 @@ import _ from "lodash";
 const DealerFilters = ({ filters, setFilter }) => {
   return (
     <>
-      <h4>Dealer Filters</h4>
       {filters.map((f, idx) => (
-        <div key={idx}>
-          {f.label}
-          <input
+        <FilterItem key={idx}>
+          <FilterInput
             key={idx}
             type="checkbox"
             checked={f.active}
@@ -19,11 +17,49 @@ const DealerFilters = ({ filters, setFilter }) => {
               setFilter(f.label, e.target.checked);
             }}
           />
-        </div>
+          <FilterLabel onClick={(e) => setFilter(f.label, !f.active)}>
+            {f.label}
+          </FilterLabel>
+        </FilterItem>
       ))}
     </>
   );
 };
+
+const FilterItem = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const FilterLabel = styled.div`
+  padding-left: 10px;
+  cursor: pointer;
+`;
+
+const FilterInput = styled.input`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 20px;
+  width: 20px;
+  appearance: none;
+
+  border: 1px solid #34495e;
+  border-radius: 3px;
+  outline: none;
+  transition-duration: 0.3s;
+  cursor: pointer;
+
+  &:checked {
+    background-color: black;
+  }
+
+  &:before {
+    content: "X";
+    color: white;
+  }
+`;
 
 DealerFilters.propTypes = {
   setFilter: PropTypes.func.isRequired,
