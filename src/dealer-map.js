@@ -13,11 +13,12 @@ class DealerMap extends React.Component {
       console.error("no google?");
       return;
     }
-    this.unselectedDealerIcon = this.buildIcon(
-      this.props.unselectedDealerIcon,
-      20
-    );
-    this.selectedDealerIcon = this.buildIcon(this.props.selectedDealerIcon, 30);
+    this.unselectedDealerIcon = this.props.unselectedDealerIcon
+      ? this.buildIcon(this.props.unselectedDealerIcon, 20)
+      : undefined;
+    this.selectedDealerIcon = this.props.selectedDealerIcon
+      ? this.buildIcon(this.props.selectedDealerIcon, 30)
+      : undefined;
   }
 
   buildIcon = (source, size) => {
@@ -86,5 +87,5 @@ DealerMap.propTypes = {
   onBoundsChanged: PropTypes.func,
   onMarkerClicked: PropTypes.func,
   selectedDealerIcon: PropTypes.string.isRequired,
-  unselectedDealerIcon: PropTypes.string.isRequired,
+  unselectedDealerIcon: PropTypes.string,
 };
