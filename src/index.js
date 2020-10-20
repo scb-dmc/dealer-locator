@@ -169,9 +169,7 @@ class DealerLocator extends React.Component {
   };
 
   render() {
-    const DealerDetailsComponent = this.props.dealerDetailsComponent
-      ? this.props.dealerDetailsComponent
-      : DealerDetails;
+    const DealerDetailsComponent = this.props.dealerDetailsComponent;
 
     return (
       <>
@@ -352,7 +350,7 @@ DealerLocator.propTypes = {
   dealerWebsiteButton: PropTypes.element.isRequired,
   apiKey: PropTypes.string.isRequired,
   dealerDetailsComponent: PropTypes.func.isRequired,
-  dealerCardComponent: PropTypes.func.isRequired,
+  dealerCardComponent: PropTypes.func,
   dealerSearchComponent: PropTypes.func,
   findOnlineText: PropTypes.string,
   dealerListSlideOutWidth: PropTypes.string,
@@ -360,6 +358,7 @@ DealerLocator.propTypes = {
 
 DealerLocator.defaultProps = {
   theme: reserve.theme,
+  dealerDetailsComponent: DealerDetails,
 };
 
 export default DealerLocator;
