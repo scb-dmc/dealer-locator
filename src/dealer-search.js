@@ -95,6 +95,7 @@ const defaultSearchBarStyles = `
 
 const SearchBarLoading = styled.div`
   ${defaultSearchBarStyles};
+  ${(props) => props.searchBarStyles}
 `;
 
 const StyledSearchBar = styled(AutoCompleteSearch)`
