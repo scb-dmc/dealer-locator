@@ -9,8 +9,9 @@ import DealerList from "./dealer-list";
 import DealerMap from "./dealer-map";
 import DealerSearch from "./dealer-search";
 import { reserve } from "./theme";
-import { createMapBounds } from "./utils";
+import { createMapBounds, isLocationWithinBoundary } from "./utils";
 import DealerModal, { FindDealersLink } from "./dealer-modal.js";
+import DealerFilters from "./dealer-filters";
 
 const defaultStartingLocation = { lat: 36.9596054, lng: -122.0564889 };
 
@@ -31,6 +32,7 @@ class DealerLocator extends React.Component {
       selectedDealer: null,
       isDealerFilterSelected: false,
       onlineModalOpen: false,
+      activeFilters: [],
     };
   }
 
@@ -84,10 +86,37 @@ class DealerLocator extends React.Component {
   };
 
   dealersWithSelectedFlag = () => {
-    return _.map(this.props.dealers, (dealer) => ({
+    const dealers = _.map(this.props.dealers, (dealer) => ({
       ...dealer,
       selected: dealer.id === _.get(this.state, "selectedDealer.id"),
     }));
+
+    if (!this.state.activeFilters.length) return dealers;
+
+    const activeMatchers = _.map(this.state.activeFilters, (f) => f.matcher);
+    return dealers.filter((dealer) => activeMatchers.every((f) => f(dealer)));
+  };
+
+  findNearestDealer = (coord) => {
+    return _.first(
+      _.sortBy(this.dealersWithSelectedFlag(), (dealer) =>
+        this.calculateDistance(
+          dealer.location.lat,
+          coord.lat,
+          dealer.location.lng,
+          coord.lng
+        )
+      )
+    );
+  };
+
+  zoomToIncludeResults = () => {
+    const nearestDealer = this.findNearestDealer(this.state.mapCenter);
+    if (
+      !isLocationWithinBoundary(nearestDealer.location, this.state.mapBoundary)
+    ) {
+      this.goToMapLocation(this.state.mapCenter);
+    }
   };
 
   /* Pan to map location & find nearest dealer on autocomplete selection,
@@ -106,16 +135,7 @@ class DealerLocator extends React.Component {
     }
 
     // No zoom specified, so we'll need to figure out the correct zoom level based on the nearest dealer
-    let nearestDealer = _.first(
-      _.sortBy(this.props.dealers, (dealer) =>
-        this.calculateDistance(
-          dealer.location.lat,
-          coord.lat,
-          dealer.location.lng,
-          coord.lng
-        )
-      )
-    );
+    let nearestDealer = this.findNearestDealer(coord);
 
     const cartesianDistanceToNearestDealer = this.calculateDistance(
       nearestDealer.location.lat,
@@ -168,6 +188,25 @@ class DealerLocator extends React.Component {
     });
   };
 
+  setFilter = (label, active) => {
+    if (active) {
+      this.setState({
+        activeFilters: [
+          ...this.state.activeFilters,
+          _.first(_.filter(this.props.filters, (f) => f.label === label)),
+        ],
+      });
+    } else {
+      this.setState({
+        activeFilters: _.filter(
+          this.state.activeFilters,
+          (f) => f.label !== label
+        ),
+      });
+    }
+    setTimeout(this.zoomToIncludeResults, 0);
+  };
+
   render() {
     const DealerDetailsComponent = this.props.dealerDetailsComponent;
 
@@ -198,7 +237,15 @@ class DealerLocator extends React.Component {
               searchBarStyles={this.props.searchBarStyles}
               theme={this.props.theme}
             />
+            <DealerFilters
+              filters={this.props.filters.map((f) => ({
+                ...f,
+                active: _.includes(this.state.activeFilters, f),
+              }))}
+              setFilter={this.setFilter}
+            />
           </SearchArea>
+
           <ListArea
             ref={this.dealerListAreaRef}
             allowScroll={!this.state.selectedDealer}
@@ -354,11 +401,13 @@ DealerLocator.propTypes = {
   dealerSearchComponent: PropTypes.func,
   findOnlineText: PropTypes.string,
   dealerListSlideOutWidth: PropTypes.string,
+  filters: PropTypes.array,
 };
 
 DealerLocator.defaultProps = {
   theme: reserve.theme,
   dealerDetailsComponent: DealerDetails,
+  filters: [],
 };
 
 export default DealerLocator;

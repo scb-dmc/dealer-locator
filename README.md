@@ -19,7 +19,7 @@ import SearchIcon from "../components/atoms/search-icon";
 import searchBarStyles from "../utils/searchbar-styles";
 import DealerFilterButton from "../components/atoms/dealer-filter-button";
 
-const ReserveDealerLocator = props => {
+const ReserveDealerLocator = (props) => {
   return (
     <Layout pageContext={props.pageContext} omitFooter={false}>
       <DealerLocator
@@ -30,10 +30,12 @@ const ReserveDealerLocator = props => {
         dealerWebsiteButton={<Button title="Website" externalLink={true} />}
         dealerDetailsComponent={DealerDetails}
         dealerCardComponent={DealerCard}
-        placeholder='Find a retailer'
+        placeholder="Find a retailer"
         searchIcon={<SearchIcon />}
         searchBarStyles={searchBarStyles}
-        dealerFilterButton={<DealerFilterButton primaryText="Find Santa Cruz" linkText="online" />}
+        dealerFilterButton={
+          <DealerFilterButton primaryText="Find Santa Cruz" linkText="online" />
+        }
       />
     </Layout>
   );
@@ -53,12 +55,12 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 
   config.module.rules = [
     ...config.module.rules.filter(
-      rule => String(rule.test) !== String(/\.jsx?$/)
+      (rule) => String(rule.test) !== String(/\.jsx?$/)
     ),
     {
       ...loaders.js(),
       test: /\.jsx?$/,
-      exclude: modulePath =>
+      exclude: (modulePath) =>
         /node_modules/.test(modulePath) &&
         !/node_modules\/(@scb-dmc)/.test(modulePath),
     },
@@ -70,7 +72,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 
 ### Props
 
-* `dealers`: An array of dealers, which look like the following:
+- `dealers`: An array of dealers, which look like the following:
   ```json
   {
     "id": "69011",
@@ -89,18 +91,27 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
     "website": ""
   },
   ```
-* `border`: A React element to act as the border between "dealers on map" and
+- `border`: A React element to act as the border between "dealers on map" and
   "dealers off map"
-* `selectedDealerIcon`: A string, typically from an imported SVG, that will be built
+- `selectedDealerIcon`: A string, typically from an imported SVG, that will be built
   into the map icon for the currently selected dealer
-* `closeDealerButton`: A React element to act as the close dealer button. *An `onClick`
-  handler does not need to be specified and the appropriate handler will be added automatically.*
-* `dealerWebsiteButton`: A React element to act as the button linking to the dealer's website.
-  *An `onClick` handler does not need to be specified and the appropirate handler will be added
-  automatically*.
-* `dealerDetailsComponent`: A React component to extend the dealer details flyout.
-* `dealerCardComponent`: A React component to extend the dealer card within the primary dealer list.
-* `placeholder`: A prop that accepts a string for the search bar placeholder.
-* `searchIcon`: A React component to create a search button icon.
-* `searchBarStyles`: Custom CSS styles for search bar.
-* `dealerFilterButton`: A React component to filter by online dealers in the list.
+- `closeDealerButton`: A React element to act as the close dealer button. _An `onClick`
+  handler does not need to be specified and the appropriate handler will be added automatically._
+- `dealerWebsiteButton`: A React element to act as the button linking to the dealer's website.
+  _An `onClick` handler does not need to be specified and the appropirate handler will be added
+  automatically_.
+- `dealerDetailsComponent`: A React component to extend the dealer details flyout.
+- `dealerCardComponent`: A React component to extend the dealer card within the primary dealer list.
+- `placeholder`: A prop that accepts a string for the search bar placeholder.
+- `searchIcon`: A React component to create a search button icon.
+- `searchBarStyles`: Custom CSS styles for search bar.
+- `filters`: An array of filtering options for the dealer list. Filters will include text to display for each filter, and a matcher function that takes a dealer and returns whether or not the dealer matches the filter.
+
+```js
+[
+  {
+    label: "Demos Available",
+    matcher: (dealer) => dealer.demo,
+  },
+];
+```
