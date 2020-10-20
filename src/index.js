@@ -361,7 +361,8 @@ const SearchArea = styled.div`
     padding-left: 11px;
     height: fit-content;
     box-sizing: content-box;
-    width: 330px;
+    width: 350px;
+    max-width: calc(100% - 11px);
   }
 `;
 

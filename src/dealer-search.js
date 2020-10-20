@@ -90,6 +90,7 @@ const defaultSearchBarStyles = `
   margin-bottom: 15px;
   width: 100%;
   font-size: 14px;
+  outline: none;
 `;
 
 const SearchBarLoading = styled.div`
