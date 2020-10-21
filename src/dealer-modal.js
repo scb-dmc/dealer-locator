@@ -63,12 +63,14 @@ const ModalHeader = styled.h4`
 const DealerList = styled.ul`
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin: 2rem 2rem;
 `;
 
 const DealerListRow = styled.li`
-  margin-right: 3em;
   margin-bottom: 1rem;
+  max-width: 250px;
 `;
 
 const Modal = styled.div`
