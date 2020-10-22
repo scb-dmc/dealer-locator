@@ -65,6 +65,7 @@ const DealerList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   margin: 2rem 2rem;
 `;
 
