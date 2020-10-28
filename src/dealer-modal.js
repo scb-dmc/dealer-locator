@@ -37,7 +37,8 @@ const DealerModal = ({
                   key={dealer.uid}
                 >
                   <DealerListRow>
-                    <img
+                    <DealerLogo
+                      theme={theme}
                       src={_.get(dealer, "data.dealer_logo.url", "")}
                       alt={_.get(dealer, "data.dealer_logo.alt", "")}
                     />
@@ -63,15 +64,24 @@ const ModalHeader = styled.h4`
 const DealerList = styled.ul`
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
   margin: 2rem 2rem;
 `;
 
 const DealerListRow = styled.li`
-  margin-bottom: 1rem;
-  max-width: 250px;
+  margin: 2rem 0;
+`;
+
+const DealerLogo = styled.img`
+  max-width: 350px;
+  max-height: 200px;
+
+  @media screen and (max-width: ${(props) =>
+      props.theme.sideBySideLayoutBreakpoint}) {
+    max-width: 90%;
+  }
 `;
 
 const Modal = styled.div`
@@ -85,7 +95,7 @@ const Modal = styled.div`
   @media screen and (max-width: ${(props) =>
       props.theme.sideBySideLayoutBreakpoint}) {
     width: 100%;
-    margin: 0 1rem;
+    margin: 2rem 1rem auto 1rem;
   }
 `;
 
