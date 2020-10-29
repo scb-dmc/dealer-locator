@@ -85,7 +85,7 @@ const DealerLogo = styled.img`
 `;
 
 const Modal = styled.div`
-  position: relative;
+  position: absolute;
   z-index: 999;
   background: white;
   box-shadow: 0 10px 20px 5px rgba(0, 0, 0, 0.2);
@@ -96,6 +96,10 @@ const Modal = styled.div`
       props.theme.sideBySideLayoutBreakpoint}) {
     width: 100%;
     margin: 2rem 1rem auto 1rem;
+  }
+  @media screen and (min-width: ${(props) =>
+      props.theme.sideBySideLayoutBreakpoint}) {
+    top: 0.25rem;
   }
 `;
 
