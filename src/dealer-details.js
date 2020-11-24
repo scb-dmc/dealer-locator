@@ -46,7 +46,7 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
               <div>{dealer.addr1}</div>
               <div>
                 {dealer.city ? `${dealer.city}, ` : ""}
-                {dealer.state ? `${dealer.state}, ` : ""}
+                {dealer.state ? `${dealer.state} ` : ""}
                 {dealer.zip ? `${dealer.zip} ` : ""}
                 {dealer.country ? `${dealer.country}` : ""}
               </div>
