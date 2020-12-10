@@ -35,20 +35,23 @@ class DealerSearch extends React.Component {
             searchBarStyles={this.props.searchBarStyles}
             onChange={this.onChange}
             google={this.props.google}
-            onPlaceSelected={(places) => {
-              if (places.length > 0) {
+            onPlaceSelected={(place) => {
+              if (place && place.geometry) {
                 return this.props.goToMapLocation({
-                  lat: places[0].geometry.location.lat(),
-                  lng: places[0].geometry.location.lng(),
+                  lat: place.geometry.location.lat(),
+                  lng: place.geometry.location.lng(),
                 });
+              }
+              if (place && place.name) {
+                this.props.goToSearchLocation(this.state.searchValue);
               }
             }}
           />
           <SearchBtn
             aria-label="search button"
-            onClick={() =>
-              this.props.goToSearchLocation(this.state.searchValue)
-            }
+            onClick={() => {
+              this.props.goToSearchLocation(this.state.searchValue);
+            }}
           >
             {this.props.searchIcon ? (
               this.props.searchIcon

@@ -13,7 +13,7 @@ class ReactGoogleSearchBox extends React.Component {
   constructor(props) {
     super(props);
     this.autocomplete = null;
-    this.event = null;
+    this.placeSelectedEvent = null;
   }
 
   componentDidMount() {
@@ -21,15 +21,9 @@ class ReactGoogleSearchBox extends React.Component {
       types = ["(cities)"],
       componentRestrictions,
       bounds,
-      fields = [
-        "address_components",
-        "geometry.location",
-        "place_id",
-        "formatted_address",
-      ],
+      fields = ["geometry.location"],
     } = this.props;
     const config = {
-      types,
       bounds,
       fields,
     };
@@ -40,13 +34,13 @@ class ReactGoogleSearchBox extends React.Component {
 
     this.disableAutofill();
 
-    this.autocomplete = new this.props.google.maps.places.SearchBox(
+    this.autocomplete = new this.props.google.maps.places.Autocomplete(
       this.refs.input,
       config
     );
 
-    this.event = this.autocomplete.addListener(
-      "places_changed",
+    this.placeSelectedEvent = this.autocomplete.addListener(
+      "place_changed",
       this.onSelected.bind(this)
     );
   }
@@ -68,15 +62,14 @@ class ReactGoogleSearchBox extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.event) this.event.remove();
+    if (this.placeSelectedEvent) this.placeSelectedEvent.remove();
   }
 
   onSelected() {
+    console.log("onSelected hit", this.autocomplete);
     if (this.props.onPlaceSelected && this.autocomplete) {
-      this.props.onPlaceSelected(
-        this.autocomplete.getPlaces(),
-        this.refs.input
-      );
+      console.log("getPlace returns", this.autocomplete.getPlace());
+      this.props.onPlaceSelected(this.autocomplete.getPlace(), this.refs.input);
     }
   }
 
