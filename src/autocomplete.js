@@ -66,9 +66,7 @@ class ReactGoogleSearchBox extends React.Component {
   }
 
   onSelected() {
-    console.log("onSelected hit", this.autocomplete);
     if (this.props.onPlaceSelected && this.autocomplete) {
-      console.log("getPlace returns", this.autocomplete.getPlace());
       this.props.onPlaceSelected(this.autocomplete.getPlace(), this.refs.input);
     }
   }
