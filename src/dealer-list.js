@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import _ from "lodash";
+import _filter from "lodash/filter";
+import _isEmpty from "lodash/isEmpty";
+import _sortBy from "lodash/sortBy";
 
 import { isLocationWithinBoundary } from "./utils";
 
@@ -49,13 +51,13 @@ const DealerList = ({
 }) => {
   const OnlineDealerFilterProp = filterOnlineDealers;
 
-  const dealersOnMap = _.filter(dealers, (dealer) => {
+  const dealersOnMap = _filter(dealers, (dealer) => {
     return OnlineDealerFilterProp
       ? filterByOnlineDealer(dealer)
       : isLocationWithinBoundary(dealer.location, mapBoundary);
   });
 
-  const dealersOffMap = _.filter(
+  const dealersOffMap = _filter(
     dealers,
     (dealer) => !isLocationWithinBoundary(dealer.location, mapBoundary)
   );
@@ -77,16 +79,16 @@ const DealerList = ({
         dealerListSlideOutWidth={dealerListSlideOutWidth}
         dealerListBottomBuffer={dealerListBottomBuffer}
       >
-        {_.sortBy(dealersOnMap, sorter).map(dealerCardCreator)}
+        {_sortBy(dealersOnMap, sorter).map(dealerCardCreator)}
       </List>
-      {!_.isEmpty(dealersOnMap) && border}
+      {!_isEmpty(dealersOnMap) && border}
       <List
         emphasized={false}
         theme={theme}
         dealerListSlideOutWidth={dealerListSlideOutWidth}
         dealerListBottomBuffer={dealerListBottomBuffer}
       >
-        {_.sortBy(dealersOffMap, sorter).map(dealerCardCreator)}
+        {_sortBy(dealersOffMap, sorter).map(dealerCardCreator)}
       </List>
     </>
   );
