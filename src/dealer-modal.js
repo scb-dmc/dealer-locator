@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import _ from "lodash";
+import _map from "lodash/map";
+import _get from "lodash/get";
 
 export const FindDealersLink = ({ text, onClick, theme }) => {
   return (
@@ -29,9 +30,9 @@ const DealerModal = ({
           <ModalInner>
             <ModalHeader>{text}</ModalHeader>
             <DealerList>
-              {_.map(dealers, (dealer) => (
+              {_map(dealers, (dealer) => (
                 <a
-                  href={_.get(dealer, "data.dealer_homepage.url", "#")}
+                  href={_get(dealer, "data.dealer_homepage.url", "#")}
                   target="_blank"
                   rel="noreferrer noopener"
                   key={dealer.uid}
@@ -39,8 +40,8 @@ const DealerModal = ({
                   <DealerListRow>
                     <DealerLogo
                       theme={theme}
-                      src={_.get(dealer, "data.dealer_logo.url", "")}
-                      alt={_.get(dealer, "data.dealer_logo.alt", "")}
+                      src={_get(dealer, "data.dealer_logo.url", "")}
+                      alt={_get(dealer, "data.dealer_logo.alt", "")}
                     />
                   </DealerListRow>
                 </a>

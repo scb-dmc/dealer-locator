@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import _ from "lodash";
+import _clamp from "lodash/clamp";
+import _filter from "lodash/filter";
+import _first from "lodash/first";
+import _get from "lodash/get";
+import _includes from "lodash/includes";
+import _isArray from "lodash/isArray";
+import _map from "lodash/map";
+import _sortBy from "lodash/sortBy";
 import ReactGA from "react-ga";
 
 import DealerDetails from "./dealer-details.js";
@@ -72,8 +79,8 @@ class DealerLocator extends React.Component {
 
     this.dealerListAreaRef.current.scrollTop = 0;
 
-    const zoom = _.clamp(
-      _.get(this.state, "mapZoom", defaultZoom),
+    const zoom = _clamp(
+      _get(this.state, "mapZoom", defaultZoom),
       minZoom,
       maxZoom
     );
@@ -81,25 +88,25 @@ class DealerLocator extends React.Component {
     ReactGA.event({
       category: "Dealer Locator",
       action: "Selected Dealer",
-      label: _.get(dealer, "name"),
+      label: _get(dealer, "name"),
     });
   };
 
   dealersWithSelectedFlag = () => {
-    const dealers = _.map(this.props.dealers, (dealer) => ({
+    const dealers = _map(this.props.dealers, (dealer) => ({
       ...dealer,
-      selected: dealer.id === _.get(this.state, "selectedDealer.id"),
+      selected: dealer.id === _get(this.state, "selectedDealer.id"),
     }));
 
     if (!this.state.activeFilters.length) return dealers;
 
-    const activeMatchers = _.map(this.state.activeFilters, (f) => f.matcher);
+    const activeMatchers = _map(this.state.activeFilters, (f) => f.matcher);
     return dealers.filter((dealer) => activeMatchers.every((f) => f(dealer)));
   };
 
   findNearestDealer = (coord) => {
-    return _.first(
-      _.sortBy(this.dealersWithSelectedFlag(), (dealer) =>
+    return _first(
+      _sortBy(this.dealersWithSelectedFlag(), (dealer) =>
         this.calculateDistance(
           dealer.location.lat,
           coord.lat,
@@ -165,7 +172,7 @@ class DealerLocator extends React.Component {
       query: searchValue,
     };
     this.placesService.findPlaceFromQuery(request, (searchResults) => {
-      if (_.isArray(searchResults) && searchResults.length > 0) {
+      if (_isArray(searchResults) && searchResults.length > 0) {
         return this.goToMapLocation({
           lat: searchResults[0].geometry.location.lat(),
           lng: searchResults[0].geometry.location.lng(),
@@ -193,12 +200,12 @@ class DealerLocator extends React.Component {
       this.setState({
         activeFilters: [
           ...this.state.activeFilters,
-          _.first(_.filter(this.props.filters, (f) => f.label === label)),
+          _first(_filter(this.props.filters, (f) => f.label === label)),
         ],
       });
     } else {
       this.setState({
-        activeFilters: _.filter(
+        activeFilters: _filter(
           this.state.activeFilters,
           (f) => f.label !== label
         ),
@@ -240,7 +247,7 @@ class DealerLocator extends React.Component {
             <DealerFilters
               filters={this.props.filters.map((f) => ({
                 ...f,
-                active: _.includes(this.state.activeFilters, f),
+                active: _includes(this.state.activeFilters, f),
               }))}
               setFilter={this.setFilter}
             />

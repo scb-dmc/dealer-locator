@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import ReactGA from "react-ga";
-import _ from "lodash";
+import _get from "lodash/get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone, faDirections } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons/faPhone";
+import { faDirections } from "@fortawesome/free-solid-svg-icons/faDirections";
 
 const createDealerDirectionsURL = (dealer) => {
   const dealerFieldsToIncludeInQuery = [
@@ -24,7 +25,7 @@ const dealerConversionEvent = (dealer, action) => {
   ReactGA.event({
     category: "Dealer Locator",
     action: action,
-    label: _.get(dealer, "name"),
+    label: _get(dealer, "name"),
   });
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
+import _debounce from "lodash/debounce";
 import styled from "styled-components";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 
@@ -42,7 +42,7 @@ class DealerMap extends React.Component {
         initialCenter={initialCenter}
         google={google}
         onReady={(mapProps, map) => onReady(mapProps, map, google)}
-        onBoundsChanged={_.debounce(onBoundsChanged, 250)}
+        onBoundsChanged={_debounce(onBoundsChanged, 250)}
         centerAroundCurrentLocation={true}
         mapTypeControl={false}
         fullscreenControl={false}
