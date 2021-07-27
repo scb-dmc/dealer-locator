@@ -23,6 +23,5 @@ export default {
     "react",
     "react-dom",
     "styled-components",
-    "react-ga",
   ],
 };
