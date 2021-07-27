@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import ReactGA from "react-ga";
 import _get from "lodash/get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons/faPhone";
@@ -21,15 +20,15 @@ const createDealerDirectionsURL = (dealer) => {
   return `https://www.google.com/maps/dir/?api=1&destination=${dealerLocationQuery}`;
 };
 
-const dealerConversionEvent = (dealer, action) => {
-  ReactGA.event({
+const dealerConversionEvent = (dealer, action, trackEvent) => {
+  trackEvent({
     category: "Dealer Locator",
     action: action,
     label: _get(dealer, "name"),
   });
 };
 
-const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
+const DealerDetails = ({ dealer, close, closeButton, websiteButton, trackEvent }) => {
   if (!dealer) {
     return <div />;
   }
@@ -59,7 +58,7 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
               {dealer.phone && (
                 <a
                   href={`tel:${dealer.phone}`}
-                  onClick={() => dealerConversionEvent(dealer, "Phone Clicked")}
+                  onClick={() => dealerConversionEvent(dealer, "Phone Clicked", trackEvent)}
                 >
                   <Icon icon={faPhone} /> {dealer.phone}
                 </a>
@@ -69,7 +68,7 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() =>
-                  dealerConversionEvent(dealer, "Directions Clicked")
+                  dealerConversionEvent(dealer, "Directions Clicked", trackEvent)
                 }
               >
                 <Icon icon={faDirections} /> Get Directions
@@ -79,7 +78,7 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton }) => {
           <Website>
             {dealer.website &&
               React.cloneElement(websiteButton, {
-                onClick: dealerConversionEvent(dealer, "Website Clicked"),
+                onClick: dealerConversionEvent(dealer, "Website Clicked", trackEvent),
                 callToActionLink: dealer.website,
               })}
           </Website>
