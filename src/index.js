@@ -9,6 +9,7 @@ import _includes from "lodash/includes";
 import _isArray from "lodash/isArray";
 import _map from "lodash/map";
 import _sortBy from "lodash/sortBy";
+import _isFunction from "lodash/isFunction";
 
 import DealerDetails from "./dealer-details.js";
 import DealerList from "./dealer-list";
@@ -215,6 +216,14 @@ class DealerLocator extends React.Component {
 
   render() {
     const DealerDetailsComponent = this.props.dealerDetailsComponent;
+    
+    if (!_isFunction(this.props.trackEvent)) {
+      console.warn('Dealer Locator mounted without event tracking callback!!! Events will not be tracked.');
+    }
+
+    const trackEvent = _isFunction(this.props.trackEvent) 
+      ? this.props.trackEvent 
+      : () => {};
 
     return (
       <>
@@ -262,7 +271,7 @@ class DealerLocator extends React.Component {
             <DealerList
               key={"DealerList"}
               dealers={this.dealersWithSelectedFlag()}
-              onDealerClicked={(dealer) => this.onDealerSelected(dealer, this.props.trackEvent)}
+              onDealerClicked={(dealer) => this.onDealerSelected(dealer, trackEvent)}
               mapCenter={this.state.mapCenter}
               mapBoundary={this.state.mapBoundary}
               border={this.props.border}
@@ -274,7 +283,7 @@ class DealerLocator extends React.Component {
               dealers={this.dealersWithSelectedFlag()}
               initialCenter={defaultStartingLocation}
               onBoundsChanged={this.onBoundsChanged}
-              onDealerMarkerClicked={(dealer) => this.onDealerSelected(dealer, this.props.trackEvent)}
+              onDealerMarkerClicked={(dealer) => this.onDealerSelected(dealer, trackEvent)}
               onReady={this.onMapReady}
               unselectedDealerIcon={this.props.unselectedDealerIcon}
               selectedDealerIcon={this.props.selectedDealerIcon}
@@ -297,7 +306,7 @@ class DealerLocator extends React.Component {
               close={this.clearSelectedDealer}
               closeButton={this.props.closeDealerButton}
               websiteButton={this.props.dealerWebsiteButton}
-              trackEvent={this.props.trackEvent}
+              trackEvent={trackEvent}
             />
           </DealerDetailsWrapper>
         </DealerLocatorWrapper>
