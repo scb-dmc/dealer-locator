@@ -86,7 +86,6 @@ class DealerLocator extends React.Component {
     );
     this.goToMapLocation(dealer.location, zoom);
     trackEvent({
-      category: "Dealer Locator",
       action: "Selected Dealer",
       label: _get(dealer, "name"),
     });
@@ -216,13 +215,15 @@ class DealerLocator extends React.Component {
 
   render() {
     const DealerDetailsComponent = this.props.dealerDetailsComponent;
-    
+
     if (!_isFunction(this.props.trackEvent)) {
-      console.warn('Dealer Locator mounted without event tracking callback!!! Events will not be tracked.');
+      console.warn(
+        "Dealer Locator mounted without event tracking callback!!! Events will not be tracked."
+      );
     }
 
-    const trackEvent = _isFunction(this.props.trackEvent) 
-      ? this.props.trackEvent 
+    const trackEvent = _isFunction(this.props.trackEvent)
+      ? this.props.trackEvent
       : () => {};
 
     return (
@@ -271,7 +272,9 @@ class DealerLocator extends React.Component {
             <DealerList
               key={"DealerList"}
               dealers={this.dealersWithSelectedFlag()}
-              onDealerClicked={(dealer) => this.onDealerSelected(dealer, trackEvent)}
+              onDealerClicked={(dealer) =>
+                this.onDealerSelected(dealer, trackEvent)
+              }
               mapCenter={this.state.mapCenter}
               mapBoundary={this.state.mapBoundary}
               border={this.props.border}
@@ -283,7 +286,9 @@ class DealerLocator extends React.Component {
               dealers={this.dealersWithSelectedFlag()}
               initialCenter={defaultStartingLocation}
               onBoundsChanged={this.onBoundsChanged}
-              onDealerMarkerClicked={(dealer) => this.onDealerSelected(dealer, trackEvent)}
+              onDealerMarkerClicked={(dealer) =>
+                this.onDealerSelected(dealer, trackEvent)
+              }
               onReady={this.onMapReady}
               unselectedDealerIcon={this.props.unselectedDealerIcon}
               selectedDealerIcon={this.props.selectedDealerIcon}
