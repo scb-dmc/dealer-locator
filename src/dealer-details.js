@@ -22,13 +22,18 @@ const createDealerDirectionsURL = (dealer) => {
 
 const dealerConversionEvent = (dealer, action, trackEvent) => {
   trackEvent({
-    category: "Dealer Locator",
     action: action,
     label: _get(dealer, "name"),
   });
 };
 
-const DealerDetails = ({ dealer, close, closeButton, websiteButton, trackEvent }) => {
+const DealerDetails = ({
+  dealer,
+  close,
+  closeButton,
+  websiteButton,
+  trackEvent,
+}) => {
   if (!dealer) {
     return <div />;
   }
@@ -58,7 +63,9 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton, trackEvent }
               {dealer.phone && (
                 <a
                   href={`tel:${dealer.phone}`}
-                  onClick={() => dealerConversionEvent(dealer, "Phone Clicked", trackEvent)}
+                  onClick={() =>
+                    dealerConversionEvent(dealer, "Phone Clicked", trackEvent)
+                  }
                 >
                   <Icon icon={faPhone} /> {dealer.phone}
                 </a>
@@ -68,7 +75,11 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton, trackEvent }
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() =>
-                  dealerConversionEvent(dealer, "Directions Clicked", trackEvent)
+                  dealerConversionEvent(
+                    dealer,
+                    "Directions Clicked",
+                    trackEvent
+                  )
                 }
               >
                 <Icon icon={faDirections} /> Get Directions
@@ -78,7 +89,11 @@ const DealerDetails = ({ dealer, close, closeButton, websiteButton, trackEvent }
           <Website>
             {dealer.website &&
               React.cloneElement(websiteButton, {
-                onClick: dealerConversionEvent(dealer, "Website Clicked", trackEvent),
+                onClick: dealerConversionEvent(
+                  dealer,
+                  "Website Clicked",
+                  trackEvent
+                ),
                 callToActionLink: dealer.website,
               })}
           </Website>
