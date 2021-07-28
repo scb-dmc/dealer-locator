@@ -259,7 +259,7 @@ class DealerLocator extends React.Component {
               dealers={this.dealersWithSelectedFlag()}
               onDealerClicked={(dealer) => {
                 this.onDealerSelected(dealer);
-                this.props.onDealerSelected(_get(dealer, "name"));
+                this.props.onDealerSelected(dealer);
               }}
               mapCenter={this.state.mapCenter}
               mapBoundary={this.state.mapBoundary}
