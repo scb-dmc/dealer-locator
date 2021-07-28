@@ -9,7 +9,6 @@ import _includes from "lodash/includes";
 import _isArray from "lodash/isArray";
 import _map from "lodash/map";
 import _sortBy from "lodash/sortBy";
-import _isFunction from "lodash/isFunction";
 
 import DealerDetails from "./dealer-details.js";
 import DealerList from "./dealer-list";
