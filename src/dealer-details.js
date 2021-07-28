@@ -84,7 +84,7 @@ const DealerDetails = ({
           <Website>
             {dealer.website &&
               React.cloneElement(websiteButton, {
-                onClick: () => props.onDealerWebsiteClicked(dealer),
+                onClick: () => onDealerWebsiteClicked(dealer),
                 callToActionLink: dealer.website,
               })}
           </Website>
