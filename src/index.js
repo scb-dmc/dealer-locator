@@ -72,7 +72,7 @@ class DealerLocator extends React.Component {
     });
   };
 
-  onDealerSelected = (dealer, trackEvent) => {
+  onDealerSelected = (dealer) => {
     this.setState({
       selectedDealer: dealer,
     });
@@ -85,10 +85,6 @@ class DealerLocator extends React.Component {
       maxZoom
     );
     this.goToMapLocation(dealer.location, zoom);
-    trackEvent({
-      action: "Selected Dealer",
-      label: _get(dealer, "name"),
-    });
   };
 
   dealersWithSelectedFlag = () => {
@@ -216,16 +212,6 @@ class DealerLocator extends React.Component {
   render() {
     const DealerDetailsComponent = this.props.dealerDetailsComponent;
 
-    if (!_isFunction(this.props.trackEvent)) {
-      console.warn(
-        "Dealer Locator mounted without event tracking callback!!! Events will not be tracked."
-      );
-    }
-
-    const trackEvent = _isFunction(this.props.trackEvent)
-      ? this.props.trackEvent
-      : () => {};
-
     return (
       <>
         <DealerModal
@@ -272,9 +258,10 @@ class DealerLocator extends React.Component {
             <DealerList
               key={"DealerList"}
               dealers={this.dealersWithSelectedFlag()}
-              onDealerClicked={(dealer) =>
-                this.onDealerSelected(dealer, trackEvent)
-              }
+              onDealerClicked={(dealer) => {
+                this.onDealerSelected(dealer);
+                this.props.onDealerSelected(_get(dealer, "name"));
+              }}
               mapCenter={this.state.mapCenter}
               mapBoundary={this.state.mapBoundary}
               border={this.props.border}
@@ -286,9 +273,10 @@ class DealerLocator extends React.Component {
               dealers={this.dealersWithSelectedFlag()}
               initialCenter={defaultStartingLocation}
               onBoundsChanged={this.onBoundsChanged}
-              onDealerMarkerClicked={(dealer) =>
-                this.onDealerSelected(dealer, trackEvent)
-              }
+              onDealerMarkerClicked={(dealer) => {
+                this.onDealerSelected(dealer);
+                this.props.onDealerSelected(_get(dealer, "name"));
+              }}
               onReady={this.onMapReady}
               unselectedDealerIcon={this.props.unselectedDealerIcon}
               selectedDealerIcon={this.props.selectedDealerIcon}
@@ -311,7 +299,9 @@ class DealerLocator extends React.Component {
               close={this.clearSelectedDealer}
               closeButton={this.props.closeDealerButton}
               websiteButton={this.props.dealerWebsiteButton}
-              trackEvent={trackEvent}
+              onDealerPhoneClicked={this.props.onDealerPhoneClicked}
+              onDealerDirectionsClicked={this.props.onDealerDirectionsClicked}
+              onDealerWebsiteClicked={this.props.onDealerWebsiteClicked}
             />
           </DealerDetailsWrapper>
         </DealerLocatorWrapper>
@@ -430,6 +420,10 @@ DealerLocator.defaultProps = {
   theme: reserve.theme,
   dealerDetailsComponent: DealerDetails,
   filters: [],
+  onDealerPhoneClicked: () => {},
+  onDealerDirectionsClicked: () => {},
+  onDealerWebsiteClicked: () => {},
+  onDealerSelected: () => {},
 };
 
 export default DealerLocator;

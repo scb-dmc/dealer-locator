@@ -33,6 +33,9 @@ const DealerDetails = ({
   closeButton,
   websiteButton,
   trackEvent,
+  onDealerPhoneClicked,
+  onDealerDirectionsClicked,
+  onDealerWebsiteClicked,
 }) => {
   if (!dealer) {
     return <div />;
@@ -63,9 +66,7 @@ const DealerDetails = ({
               {dealer.phone && (
                 <a
                   href={`tel:${dealer.phone}`}
-                  onClick={() =>
-                    dealerConversionEvent(dealer, "Phone Clicked", trackEvent)
-                  }
+                  onClick={() => onDealerPhoneClicked(dealer)}
                 >
                   <Icon icon={faPhone} /> {dealer.phone}
                 </a>
@@ -74,13 +75,7 @@ const DealerDetails = ({
                 href={createDealerDirectionsURL(dealer)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() =>
-                  dealerConversionEvent(
-                    dealer,
-                    "Directions Clicked",
-                    trackEvent
-                  )
-                }
+                onClick={() => onDealerDirectionsClicked(dealer)}
               >
                 <Icon icon={faDirections} /> Get Directions
               </a>
@@ -89,11 +84,7 @@ const DealerDetails = ({
           <Website>
             {dealer.website &&
               React.cloneElement(websiteButton, {
-                onClick: dealerConversionEvent(
-                  dealer,
-                  "Website Clicked",
-                  trackEvent
-                ),
+                onClick: () => props.onDealerWebsiteClicked(dealer),
                 callToActionLink: dealer.website,
               })}
           </Website>
