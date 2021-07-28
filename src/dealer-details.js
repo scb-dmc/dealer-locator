@@ -20,19 +20,11 @@ const createDealerDirectionsURL = (dealer) => {
   return `https://www.google.com/maps/dir/?api=1&destination=${dealerLocationQuery}`;
 };
 
-const dealerConversionEvent = (dealer, action, trackEvent) => {
-  trackEvent({
-    action: action,
-    label: _get(dealer, "name"),
-  });
-};
-
 const DealerDetails = ({
   dealer,
   close,
   closeButton,
   websiteButton,
-  trackEvent,
   onDealerPhoneClicked,
   onDealerDirectionsClicked,
   onDealerWebsiteClicked,
