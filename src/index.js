@@ -274,6 +274,9 @@ class DealerLocator extends React.Component {
               onBoundsChanged={this.onBoundsChanged}
               onDealerMarkerClicked={(dealer) => {
                 this.onDealerSelected(dealer);
+                if (typeof this.props.dealerMarkerCallback !== "undefined") {
+                  this.props.dealerMarkerCallback(dealer);
+                }
                 this.props.onDealerSelected(_get(dealer, "name"));
               }}
               onReady={this.onMapReady}
@@ -410,6 +413,7 @@ DealerLocator.propTypes = {
   dealerDetailsComponent: PropTypes.func.isRequired,
   dealerCardComponent: PropTypes.func,
   dealerSearchComponent: PropTypes.func,
+  dealerMarkerCallback: PropTypes.func,
   findOnlineText: PropTypes.string,
   dealerListSlideOutWidth: PropTypes.string,
   filters: PropTypes.array,
