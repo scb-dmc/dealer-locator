@@ -39,6 +39,7 @@ class DealerMap extends React.Component {
     } = this.props;
     return (
       <Map
+        zoom={10}
         initialCenter={initialCenter}
         google={google}
         onReady={(mapProps, map) => onReady(mapProps, map, google)}
